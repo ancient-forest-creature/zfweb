@@ -13,7 +13,7 @@ const mockImages = mockUrls.map((url, index) => ({
 export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <div className="ml-4 flex flex-wrap gap-4">
+      <div className="ml-4 flex flex-wrap items-center justify-center gap-4">
         {mockImages.map((image) => (
           <div key={image.id}>
             <div className="max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">

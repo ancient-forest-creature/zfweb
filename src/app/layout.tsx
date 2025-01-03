@@ -15,7 +15,6 @@ function TopNav() {
     <div className="gap-4">
       <nav className="flex w-full items-center justify-between gap-4 border-b p-4 text-xl font-semibold">
         <div>Products</div>
-
         <div> Cart</div>
       </nav>
       <div className="flex w-full items-center justify-center p-4">

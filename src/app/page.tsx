@@ -16,35 +16,23 @@ export default function HomePage() {
       <div className="flex flex-wrap items-center justify-center gap-4">
         {mockImages.map((image) => (
           <div key={image.id}>
-            <div className="max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-zinc-700 dark:bg-zinc-800">
+            <div className="relative max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-zinc-700 dark:bg-zinc-800">
               <a href="#">
-                <div className="relative">
-                  <img
-                    className="rounded-t-lg"
-                    src={image.url}
-                    alt={`Image ${image.id}`}
-                  />
-                  <div className="absolute inset-0 rounded-md bg-gray-700 opacity-30"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-between">
-                    <h2 className="text-whit text-3xl font-bold opacity-60">
-                      Cool Thing
-                    </h2>
-                    <h2 className="text-whit text-3xl font-bold opacity-60">
-                      $100
-                    </h2>
-                  </div>
-                </div>
+                <img
+                  className="rounded-t-lg"
+                  src={image.url}
+                  alt={`Image ${image.id}`}
+                />
               </a>
-              <div className="flex items-center justify-center border-white p-5">
-                {/* <a href="#">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Cool Bespoke Jewelry Thing
+              <div className="p-5">
+                <a href="#">
+                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    Horn Swaggle
                   </h5>
                 </a>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                  Gaze upon this work made with blessings from the old gods.
-                  Behold its majesty.
-                </p> */}
+                <p className="mb-3 text-xl font-normal text-gray-700 dark:text-gray-400">
+                  $100
+                </p>
                 <a
                   href="#"
                   className="inline-flex items-center rounded-lg border-slate-300 bg-black px-3 py-2 text-center text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-4 focus:ring-zinc-300 dark:bg-zinc-600 dark:hover:bg-black dark:focus:ring-zinc-800"

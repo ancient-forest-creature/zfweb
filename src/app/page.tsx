@@ -16,13 +16,9 @@ export default function HomePage() {
       <div className="flex flex-wrap items-center justify-center gap-4">
         {mockImages.map((image) => (
           <div key={image.id}>
-            <div className="relative max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-zinc-700 dark:bg-zinc-800">
+            <div className="relative max-w-sm">
               <a href="#">
-                <img
-                  className="rounded-t-lg"
-                  src={image.url}
-                  alt={`Image ${image.id}`}
-                />
+                <img src={image.url} alt={`Image ${image.id}`} />
               </a>
               <div className="p-5">
                 <a href="#">

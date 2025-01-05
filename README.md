@@ -3,9 +3,9 @@
 ## TODO
 
 - [x] Make it deploy (vercel)
-- [] Scaffold basic ui with mock data
-- [] Tidy up build process
-- [] Actually setup a db (neon postgres)
+- [x] Scaffold basic ui with mock data
+- [x] Tidy up build process
+- [x] Actually setup a db (neon postgres)
 - [] Attach db to UI
 - [] Add authentication (/w clerk)
 - [] Add image upload

@@ -4,12 +4,14 @@
 import { desc, sql } from "drizzle-orm";
 import {
   boolean,
+  decimal,
   index,
   integer,
   pgTableCreator,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+import { number } from "zod";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -34,8 +36,17 @@ export const product = createTable(
     imgurl3: varchar("img_url_3", { length: 1024 }),
     videoKey: varchar("video_key", { length: 1024 }),
     videoUrl: varchar("video_url", { length: 1024 }),
+    sku: varchar("sku", { length: 256 }).notNull(),
     inventory: integer("inventory").notNull(),
-    userId: varchar("user_id", { length: 256 }).notNull(),
+    category_id: integer("category_id")
+      .references(() => product_category.id)
+      .notNull(),
+    inventory_id: integer("inventory_id")
+      .references(() => product_inventory.id)
+      .notNull(),
+    userId: integer("user_id")
+      .references(() => customer.id)
+      .notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -50,21 +61,10 @@ export const product = createTable(
 
 export const order = createTable("order", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-  buyerId: integer("buyer_id")
+  user_id: integer("user_id")
     .references(() => customer.id)
     .notNull(),
-  receiverId: integer("receiver_id").references(() => customer.id),
-  buyerAddressId: integer("buyer_address_id")
-    .references(() => address.id)
-    .notNull(),
-  shipAddressId: integer("ship_address_id")
-    .references(() => address.id)
-    .notNull(),
-  description: varchar("description", { length: 1024 }).notNull(),
-  price: integer("price").notNull(),
-  utkey: varchar("utkey", { length: 1024 }).notNull(),
-  url: varchar("url", { length: 1024 }).notNull(),
-  userId: varchar("user_id", { length: 256 }).notNull(),
+  total: decimal("total").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -112,11 +112,89 @@ export const customer = createTable("customer", {
   ),
 });
 
-export const order_products = createTable("order_products", {
-  orderId: integer("order_id")
-    .references(() => order.id)
+export const product_inventory = createTable("product_inventory", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  quantity: integer("quantity").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  productId: integer("product_id")
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const discount = createTable("discount", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  name: varchar("name", { length: 256 }).notNull(),
+  description: varchar("description", { length: 1024 }).notNull(),
+  discount: decimal("discount").notNull(),
+  free_shipping: boolean("free_shipping").notNull(),
+  active: boolean("active").default(false),
+  numberOfUses: integer("number_of_uses").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const product_category = createTable("product_category", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  name: varchar("name", { length: 256 }).notNull(),
+  description: varchar("description", { length: 1024 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const shopping_session = createTable("shopping_session", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  user_id: integer("user_id")
+    .references(() => customer.id)
+    .notNull(),
+  total: decimal("total").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const cart_item = createTable("cart_item", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  session_id: integer("session_id")
+    .references(() => shopping_session.id)
+    .notNull(),
+  product_id: integer("product_id")
     .references(() => product.id)
     .notNull(),
+  quantity: integer("quantity").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const order_items = createTable("order_items", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  order_id: integer("order_id")
+    .references(() => order.id)
+    .notNull(),
+  product_id: integer("product_id")
+    .references(() => product.id)
+    .notNull(),
+  quantity: integer("quantity").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
 });

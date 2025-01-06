@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { db } from "~/server/db";
 
+export const dynamic = "force-dynamic";
+
 // const mockUrls = [
 //   "https://utfs.io/f/gjQG2fzhdjEbeBleGL0NFCi3YljM2kSELaKgvoGVOBtc1wZQ",
 //   "https://utfs.io/f/gjQG2fzhdjEbdt7XrR41tNb30nuvJDm7Cy1AaXo8Eec9glk5",
@@ -24,7 +26,7 @@ import { db } from "~/server/db";
 
 const Products = async () => {
   const products = await db.query.product.findMany({
-    orderBy: (model: any, { desc }) => desc(model.id),
+    orderBy: (model: any, { asc }) => asc(model.id),
   });
 
   return (

@@ -1,45 +1,67 @@
 import Link from "next/link";
+import { db } from "~/server/db";
 
-const mockUrls = [
-  "https://utfs.io/f/gjQG2fzhdjEbeBleGL0NFCi3YljM2kSELaKgvoGVOBtc1wZQ",
-  "https://utfs.io/f/gjQG2fzhdjEbdt7XrR41tNb30nuvJDm7Cy1AaXo8Eec9glk5",
-  "https://utfs.io/f/gjQG2fzhdjEbQVipOmjXKmuda7s2lyDvYNjC5fSxGgIwbiAZ",
-  "https://utfs.io/f/gjQG2fzhdjEbkTkxBRvY0wvJTtA39LnOSm7ehGM8fHbqKVP5",
-];
-const mockImages = mockUrls.map((url, index) => ({
-  id: index + 1,
-  url,
-}));
+// const mockUrls = [
+//   "https://utfs.io/f/gjQG2fzhdjEbeBleGL0NFCi3YljM2kSELaKgvoGVOBtc1wZQ",
+//   "https://utfs.io/f/gjQG2fzhdjEbdt7XrR41tNb30nuvJDm7Cy1AaXo8Eec9glk5",
+//   "https://utfs.io/f/gjQG2fzhdjEbQVipOmjXKmuda7s2lyDvYNjC5fSxGgIwbiAZ",
+//   "https://utfs.io/f/gjQG2fzhdjEbkTkxBRvY0wvJTtA39LnOSm7ehGM8fHbqKVP5",
+// ];
+
+// const mockImages = mockUrls.map((url, index) => ({
+//   id: index + 1,
+//   url,
+// }));
+
+// interface Product {
+//   id: number;
+//   title: string;
+//   description: string;
+//   price: number;
+//   img_key_1: string;
+//   img_url_1: string;
+// }
+
+const Products = async () => {
+  const products = await db.query.product.findMany({
+    orderBy: (model: any, { desc }) => desc(model.id),
+  });
+
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-4">
+      {products.map((product) => (
+        <div key={product.id}>
+          <div className="relative max-w-sm">
+            <a href="#">
+              <img src={product.imgurl1} alt={`Image ${product.id}`} />
+            </a>
+            <div className="p-5">
+              <a href="#">
+                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  {product.title}
+                </h5>
+              </a>
+              <p className="mb-3 text-xl font-normal text-gray-700 dark:text-gray-400">
+                ${product.price}
+              </p>
+              <a
+                href="#"
+                className="inline-flex items-center rounded-lg border-slate-300 bg-black px-3 py-2 text-center text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-4 focus:ring-zinc-300 dark:bg-zinc-600 dark:hover:bg-black dark:focus:ring-zinc-800"
+              >
+                Add to Cart
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        {mockImages.map((image) => (
-          <div key={image.id}>
-            <div className="relative max-w-sm">
-              <a href="#">
-                <img src={image.url} alt={`Image ${image.id}`} />
-              </a>
-              <div className="p-5">
-                <a href="#">
-                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Horn Swaggle
-                  </h5>
-                </a>
-                <p className="mb-3 text-xl font-normal text-gray-700 dark:text-gray-400">
-                  $100
-                </p>
-                <a
-                  href="#"
-                  className="inline-flex items-center rounded-lg border-slate-300 bg-black px-3 py-2 text-center text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-4 focus:ring-zinc-300 dark:bg-zinc-600 dark:hover:bg-black dark:focus:ring-zinc-800"
-                >
-                  Add to Cart
-                </a>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <Products />
     </main>
   );
 }

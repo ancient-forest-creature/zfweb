@@ -36,16 +36,10 @@ export const product = createTable(
     imgurl3: varchar("img_url_3", { length: 1024 }),
     videoKey: varchar("video_key", { length: 1024 }),
     videoUrl: varchar("video_url", { length: 1024 }),
-    sku: varchar("sku", { length: 256 }).notNull(),
-    inventory: integer("inventory").notNull(),
-    category_id: integer("category_id")
-      .references(() => product_category.id)
-      .notNull(),
+    sku: varchar("sku", { length: 256 }),
+    category_id: integer("category_id").references(() => product_category.id),
     inventory_id: integer("inventory_id")
       .references(() => product_inventory.id)
-      .notNull(),
-    userId: integer("user_id")
-      .references(() => customer.id)
       .notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)

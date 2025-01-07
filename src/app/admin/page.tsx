@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { ProductForm } from "./_components/product_form";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       <SignedIn>
         <div className="flex w-full items-center justify-center gap-16">
           <h1 className="text-4xl font-bold">Admin Page</h1>
+          <ProductForm />
         </div>
       </SignedIn>
     </main>

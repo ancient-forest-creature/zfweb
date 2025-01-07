@@ -29,18 +29,19 @@ export const product = createTable(
     description: varchar("description", { length: 1024 }).notNull(),
     price: integer("price").notNull(),
     imgKey1: varchar("img_key_1", { length: 1024 }).notNull(),
-    imgurl1: varchar("img_url_1", { length: 1024 }).notNull(),
+    imgUrl1: varchar("img_url_1", { length: 1024 }).notNull(),
     imgKey2: varchar("img_key_2", { length: 1024 }),
-    imgurl2: varchar("img_url_2", { length: 1024 }),
+    imgUrl2: varchar("img_url_2", { length: 1024 }),
     imgKey3: varchar("img_key_3", { length: 1024 }),
-    imgurl3: varchar("img_url_3", { length: 1024 }),
+    imgUrl3: varchar("img_url_3", { length: 1024 }),
     videoKey: varchar("video_key", { length: 1024 }),
     videoUrl: varchar("video_url", { length: 1024 }),
     sku: varchar("sku", { length: 256 }),
     category_id: integer("category_id").references(() => product_category.id),
-    inventory_id: integer("inventory_id")
-      .references(() => product_inventory.id)
-      .notNull(),
+    inventory: integer("inventory").notNull(),
+    // inventory_id: integer("inventory_id")
+    //   .references(() => product_inventory.id)
+    //   .notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -98,17 +99,6 @@ export const customer = createTable("customer", {
   email: varchar("email", { length: 1024 }).notNull(),
   phone: integer("ph").notNull(),
   isUser: boolean("is_user").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-    () => new Date(),
-  ),
-});
-
-export const product_inventory = createTable("product_inventory", {
-  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-  quantity: integer("quantity").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -192,3 +182,14 @@ export const order_items = createTable("order_items", {
     () => new Date(),
   ),
 });
+
+// export const product_inventory = createTable("product_inventory", {
+//   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+//   quantity: integer("quantity").notNull(),
+//   createdAt: timestamp("created_at", { withTimezone: true })
+//     .default(sql`CURRENT_TIMESTAMP`)
+//     .notNull(),
+//   updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+//     () => new Date(),
+//   ),
+// });

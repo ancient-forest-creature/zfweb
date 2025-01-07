@@ -3,10 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/only-throw-error */
 import { auth, clerkClient } from "@clerk/nextjs/server";
+import type { JsonObject } from "@uploadthing/shared";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
-import { db } from "~/server/db";
-import { product } from "~/server/db/schema";
+//import { db } from "~/server/db";
+//import { product } from "~/server/db/schema";
 //import { ratelimit } from "~/server/ratelimit";
 
 const f = createUploadthing();
@@ -21,7 +22,7 @@ export const ourFileRouter = {
        * @see https://docs.uploadthing.com/file-routes#route-config
        */
       maxFileSize: "8MB",
-      maxFileCount: 4,
+      maxFileCount: 1,
     },
   })
     // Set permissions and file types for this FileRoute
@@ -48,22 +49,51 @@ export const ourFileRouter = {
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.userId };
     })
+
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
 
       console.log("file url", file.url);
 
-      //   await db.insert(product).values({
-      //     utkey: file.key,
-      //     url: file.url,
-      //     name: file.name,
-      //     userId: metadata.userId,
-      //   });
+      type resType = {
+        key: string;
+        url: string;
+      };
 
+      const res: resType = {
+        key: file.key,
+        url: file.url,
+      };
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userId };
+      return { res };
     }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
+
+// .onUploadComplete(async ({ file }): Promise<void | JsonObject> => {
+//   // This code RUNS ON YOUR SERVER after upload
+//   //console.log("Upload complete for userId:", metadata.userId);
+
+//   console.log("file url", file.url);
+
+//   const fileJson = {
+//     name: file.name,
+//     size: file.size,
+//     type: file.type,
+//     lastModified: file.lastModified,
+//     customId: file.customId,
+//     key: file.key,
+//     url: file.url,
+//   };
+
+//   //   await db.insert(product).values({
+//   //     utkey: file.key,
+//   //     url: file.url,
+//   //     name: file.name,
+//   //     userId: metadata.userId,
+//   //   });
+
+//   // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+//   return { file: fileJson } as JsonObject;

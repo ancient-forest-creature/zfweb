@@ -131,7 +131,7 @@ export const ProductForm = () => {
         </div>
         <div>
           <label>img_Key_1: </label>
-          <input type="text" value={product.imgKey1} />
+          <input type="text" value={product.imgKey1} readOnly />
           <br />
           {/* {errors.description ? (
             <span style={{ color: "red" }}>{errors.description.message}</span>
@@ -139,7 +139,7 @@ export const ProductForm = () => {
         </div>
         <div>
           <label>img_URL_1: </label>
-          <input type="text" value={product.imgUrl1} />
+          <input type="text" value={product.imgUrl1} readOnly />
           <br />
           {/* {errors.description ? (
             <span style={{ color: "red" }}>{errors.description.message}</span>

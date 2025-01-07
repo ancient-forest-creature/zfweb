@@ -25,8 +25,8 @@ export const product = createTable(
   "product",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-    title: varchar("title", { length: 256 }).notNull(),
-    description: varchar("description", { length: 1024 }).notNull(),
+    title: varchar("title", { length: 1024 }).notNull(),
+    description: varchar("description", { length: 4096 }).notNull(),
     price: integer("price").notNull(),
     imgKey1: varchar("img_key_1", { length: 1024 }).notNull(),
     imgUrl1: varchar("img_url_1", { length: 1024 }).notNull(),
@@ -36,7 +36,7 @@ export const product = createTable(
     imgUrl3: varchar("img_url_3", { length: 1024 }),
     videoKey: varchar("video_key", { length: 1024 }),
     videoUrl: varchar("video_url", { length: 1024 }),
-    sku: varchar("sku", { length: 256 }),
+    sku: varchar("sku", { length: 1024 }),
     category_id: integer("category_id").references(() => product_category.id),
     inventory: integer("inventory").notNull(),
     // inventory_id: integer("inventory_id")

@@ -89,78 +89,96 @@ export const ProductForm = () => {
     <div>
       <UploadButton setProduct={setProduct} />
       <form>
-        <div>
-          <label>Title: </label>
-          <input
-            type="text"
-            value={product.title}
-            onChange={(e) => setProduct({ ...product, title: e.target.value })}
-          />
-          <br />
-          {/* {errors.title ? (
+        <div className="flex flex-col gap-4">
+          <div>
+            <label>Title: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.title}
+              onChange={(e) =>
+                setProduct({ ...product, title: e.target.value })
+              }
+            />
+            <br />
+            {/* {errors.title ? (
             <span style={{ color: "red" }}>{errors.title.message}</span>
           ) : null} */}
-        </div>
-        <div>
-          <label>Price: </label>
-          <input
-            type="number"
-            value={product.price}
-            onChange={(e) =>
-              setProduct({ ...product, price: Number(e.target.value) })
-            }
-          />
-          <br />
-          {/* {errors.price ? (
+          </div>
+          <div>
+            <label>Price: </label>
+            <input
+              className="text-black"
+              type="number"
+              value={product.price}
+              onChange={(e) =>
+                setProduct({ ...product, price: Number(e.target.value) })
+              }
+            />
+            <br />
+            {/* {errors.price ? (
             <span style={{ color: "red" }}>{errors.price.message}</span>
           ) : null} */}
-        </div>
-        <div>
-          <label>Description: </label>
-          <input
-            type="text"
-            value={product.description}
-            onChange={(e) =>
-              setProduct({ ...product, description: e.target.value })
-            }
-          />
-          <br />
-          {/* {errors.description ? (
+          </div>
+          <div>
+            <label>Description: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.description}
+              onChange={(e) =>
+                setProduct({ ...product, description: e.target.value })
+              }
+            />
+            <br />
+            {/* {errors.description ? (
             <span style={{ color: "red" }}>{errors.description.message}</span>
           ) : null} */}
-        </div>
-        <div>
-          <label>img_Key_1: </label>
-          <input type="text" value={product.imgKey1} readOnly />
-          <br />
-          {/* {errors.description ? (
+          </div>
+          <div>
+            <label>img_Key_1: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.imgKey1}
+              readOnly
+            />
+            <br />
+            {/* {errors.description ? (
             <span style={{ color: "red" }}>{errors.description.message}</span>
           ) : null} */}
-        </div>
-        <div>
-          <label>img_URL_1: </label>
-          <input type="text" value={product.imgUrl1} readOnly />
-          <br />
-          {/* {errors.description ? (
+          </div>
+          <div>
+            <label>img_URL_1: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.imgUrl1}
+              readOnly
+            />
+            <br />
+            {/* {errors.description ? (
             <span style={{ color: "red" }}>{errors.description.message}</span>
           ) : null} */}
-        </div>
-        <div>
-          <label>Inventory: </label>
-          <input
-            type="number"
-            value={product.inventory}
-            onChange={(e) =>
-              setProduct({ ...product, inventory: Number(e.target.value) })
-            }
-          />
-          <br />
-          {/* {errors.price ? (
+          </div>
+          <div>
+            <label>Inventory: </label>
+            <input
+              className="text-black"
+              type="number"
+              value={product.inventory}
+              onChange={(e) =>
+                setProduct({ ...product, inventory: Number(e.target.value) })
+              }
+            />
+            <br />
+            {/* {errors.price ? (
             <span style={{ color: "red" }}>{errors.price.message}</span>
           ) : null} */}
-        </div>
+          </div>
 
-        <button type="submit">Submit</button>
+          <button type="submit">Submit</button>
+        </div>
       </form>
     </div>
   );

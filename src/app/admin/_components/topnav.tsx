@@ -1,11 +1,20 @@
 import Image from "next/image";
+import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export const TopNav = () => {
   return (
     <div className="gap-4">
       <nav className="flex w-full items-center justify-between gap-4 border-b p-4 text-xl font-semibold">
         <div>Admin</div>
-        <div> Login</div>
+        <div className="flex flex-row items-center gap-4">
+          <SignedIn>
+            {/*<UploadButton endpoint="imageUploader" onClientUploadComplete={() => {router.refresh();}} />*/}
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+        </div>
       </nav>
       <div className="flex w-full items-center justify-center p-4">
         <div className="w-1/5"></div>

@@ -7,6 +7,7 @@ import {
   decimal,
   index,
   integer,
+  PgArray,
   pgTableCreator,
   timestamp,
   varchar,

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { UploadButton } from "./upload-button";
+import { db } from "~/server/db";
+import { product as dbProduct } from "~/server/db/schema";
 
 export type ErrorType = {
   message: string;
@@ -54,27 +56,28 @@ export const ProductForm = () => {
     setErrors(error);
   };
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     onSubmitProp({title, price, description}).then((res) => {
-  //         console.log(res);
-  //         setClear(true);
-  //     }).catch((err) => {
-  //         console.log(err);
-  //         setClear(false);
-  //     })
-  //     console.log("errors hs is: ", errors)
-  //     console.log("object.keys(errors) is: ", Object.keys(errors).length)
-  //     if (clear === true) {
-  //         setTitle("");
-  //         setPrice(0);
-  //         setDescription("");
-  //     }
-  //     //props.setSubmitted(true);
-  // };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await db.insert(dbProduct).values({
+      title: product.title,
+      price: product.price,
+      description: product.description,
+      imgKey1: product.imgKey1,
+      imgUrl1: product.imgUrl1,
+      inventory: product.inventory,
+    });
+    //props.setSubmitted(true);
+  };
 
   return (
     <div className="flex flex-col gap-4">
+      {product.imgUrl1 ? (
+        <div className="relative max-w-sm">
+          <a href="#">
+            <img src={product.imgUrl1} alt={"current image"} />
+          </a>
+        </div>
+      ) : null}
       <div>
         <UploadButton
           onUploadComplete={onImageUpload}
@@ -82,7 +85,7 @@ export const ProductForm = () => {
         />
         {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           <div>
             <label>Title: </label>

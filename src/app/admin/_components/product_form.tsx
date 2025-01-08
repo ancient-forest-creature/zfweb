@@ -13,16 +13,7 @@ type Errors = {
   description?: ErrorType;
 };
 
-type formProps = {
-  onSubmitProp: (product: {
-    title: string;
-    price: number;
-    description: string;
-  }) => Promise<void>;
-  errors: Errors;
-};
-
-type ProductType = {
+export type ProductType = {
   title: string;
   description: string;
   price: number;
@@ -39,11 +30,6 @@ type ProductType = {
   category_id?: string;
 };
 
-type ImageData = {
-  key: string;
-  url: string;
-};
-
 export const ProductForm = () => {
   //const {initTitle, initPrice, initDescription, onSubmitProp} = props;
   const [product, setProduct] = useState<ProductType>({
@@ -52,19 +38,15 @@ export const ProductForm = () => {
     description: "",
     imgKey1: "",
     imgUrl1: "",
-    imgKey2: "",
-    imgUrl2: "",
-    imgKey3: "",
-    imgUrl3: "",
-    videoKey: "",
-    videoUrl: "",
-    sku: "",
     inventory: 0,
-    category_id: "",
   });
   //const btnText = initTitle ? "Update" : "Create";
   //console.log("errors is: ", errors)
   const [clear, setClear] = useState(false);
+
+  const onImageUpload = (key: string, url: string) => {
+    setProduct({ ...product, imgKey1: key, imgUrl1: url });
+  };
 
   // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   //     e.preventDefault();
@@ -87,7 +69,7 @@ export const ProductForm = () => {
 
   return (
     <div>
-      <UploadButton setProduct={setProduct} />
+      <UploadButton onUploadComplete={onImageUpload} />
       <form>
         <div className="flex flex-col gap-4">
           <div>

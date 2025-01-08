@@ -3,6 +3,7 @@
 import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { set } from "zod";
+import { ProductType } from "./product_form";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -81,27 +82,27 @@ function LoadingSpinnerSVG() {
 
 // window.makeToast = makeUploadToast;
 
-type setProductProps = {
-  title: string;
-  description: string;
-  price: number;
-  imgKey1: string;
-  imgUrl1: string;
-  imgKey2?: string;
-  imgUrl2?: string;
-  imgKey3?: string;
-  imgUrl3?: string;
-  videoKey?: string;
-  videoUrl?: string;
-  sku?: string;
-  inventory: number;
-  category_id?: string;
-};
+// type setProductProps = {
+//   title: string;
+//   description: string;
+//   price: number;
+//   imgKey1: string;
+//   imgUrl1: string;
+//   imgKey2?: string;
+//   imgUrl2?: string;
+//   imgKey3?: string;
+//   imgUrl3?: string;
+//   videoKey?: string;
+//   videoUrl?: string;
+//   sku?: string;
+//   inventory: number;
+//   category_id?: string;
+// };
 
 export function UploadButton({
-  setProduct,
+  onUploadComplete,
 }: {
-  setProduct: (props: setProductProps) => void;
+  onUploadComplete: (key: string, url: string) => void;
 }) {
   const router = useRouter();
   //const posthog = usePostHog();
@@ -128,14 +129,7 @@ export function UploadButton({
     onClientUploadComplete(result) {
       if (result && result[0]) {
         const { key, url } = result[0];
-        setProduct({
-          title: "",
-          description: "",
-          price: 100,
-          inventory: 0,
-          imgKey1: key,
-          imgUrl1: url,
-        });
+        onUploadComplete(key, url);
       }
 
       //   toast.dismiss("upload-begin");

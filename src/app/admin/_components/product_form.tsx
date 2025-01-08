@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { UploadButton } from "./upload-button";
 
-type ErrorType = {
+export type ErrorType = {
   message: string;
 };
 
@@ -40,12 +40,18 @@ export const ProductForm = () => {
     imgUrl1: "",
     inventory: 0,
   });
+
+  const [errors, setErrors] = useState<ErrorType>();
   //const btnText = initTitle ? "Update" : "Create";
-  //console.log("errors is: ", errors)
+  console.log("errors is: ", errors);
   const [clear, setClear] = useState(false);
 
   const onImageUpload = (key: string, url: string) => {
     setProduct({ ...product, imgKey1: key, imgUrl1: url });
+  };
+
+  const handleErrors = (error: ErrorType) => {
+    setErrors(error);
   };
 
   // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,8 +74,14 @@ export const ProductForm = () => {
   // };
 
   return (
-    <div>
-      <UploadButton onUploadComplete={onImageUpload} />
+    <div className="flex flex-col gap-4">
+      <div>
+        <UploadButton
+          onUploadComplete={onImageUpload}
+          handleUploadErrors={handleErrors}
+        />
+        {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
+      </div>
       <form>
         <div className="flex flex-col gap-4">
           <div>

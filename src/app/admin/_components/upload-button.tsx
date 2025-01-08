@@ -99,10 +99,16 @@ function LoadingSpinnerSVG() {
 //   category_id?: string;
 // };
 
+export type ErrorType = {
+  message: string;
+};
+
 export function UploadButton({
   onUploadComplete,
+  handleUploadErrors,
 }: {
   onUploadComplete: (key: string, url: string) => void;
+  handleUploadErrors: (error: ErrorType) => void;
 }) {
   const router = useRouter();
   //const posthog = usePostHog();
@@ -125,6 +131,9 @@ export function UploadButton({
       //   posthog.capture("upload_error", { error });
       //   toast.dismiss("upload-begin");
       //   toast.error(`Error uploading image - ${error.message}`);
+      const message = error.message;
+      console.error("Error uploading image", message);
+      handleUploadErrors({ message });
     },
     onClientUploadComplete(result) {
       if (result && result[0]) {

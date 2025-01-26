@@ -1,11 +1,17 @@
-import { drizzle } from "drizzle-orm/vercel-postgres";
-import { config } from "dotenv";
-import { sql } from "@vercel/postgres";
+import { env } from "~/env";
 import * as schema from "./schema";
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
+import { config } from "dotenv";
 
-config({ path: "~/env" }); // or .env
+config();
 
+console.log("Database URL:", process.env.DATABASE_URL); // Add this line for debugging
+
+const sql = neon(env.DATABASE_URL);
 export const db = drizzle(sql, { schema });
+
+//export const db = drizzle(sql, { schema });
 
 // import { drizzle } from "drizzle-orm/postgres-js";
 // import { sql } from "@vercel/postgres";

@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { UploadButton } from "./upload-button";
-import { db } from "~/server/db";
-import { product as dbProduct } from "~/server/db/schema";
+import { addProduct } from "./db_connect";
+//import { addProduct } from "~/server/db/operations";
+// import { db } from "~/server/db";
+// import { product as dbProduct } from "~/server/db/schema";
 
 export type ErrorType = {
   message: string;
@@ -45,7 +47,7 @@ export const ProductForm = () => {
 
   const [errors, setErrors] = useState<ErrorType>();
   //const btnText = initTitle ? "Update" : "Create";
-  console.log("errors is: ", errors);
+  //console.log("errors is: ", errors);
   const [clear, setClear] = useState(false);
 
   const onImageUpload = (key: string, url: string) => {
@@ -58,16 +60,28 @@ export const ProductForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await db.insert(dbProduct).values({
-      title: product.title,
-      price: product.price,
-      description: product.description,
-      imgKey1: product.imgKey1,
-      imgUrl1: product.imgUrl1,
-      inventory: product.inventory,
-    });
-    //props.setSubmitted(true);
+    try {
+      const newProduct = await addProduct(product);
+      console.log("Product added:", newProduct);
+    } catch (err: any) {
+      console.error("Error adding product:", err);
+      handleErrors(err);
+    }
   };
+
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   load_db(product);
+  // await db.insert(dbProduct).values({
+  //   title: product.title,
+  //   price: product.price,
+  //   description: product.description,
+  //   imgKey1: product.imgKey1,
+  //   imgUrl1: product.imgUrl1,
+  //   inventory: product.inventory,
+  // });
+  //props.setSubmitted(true);
+  // };
 
   return (
     <div className="flex flex-col gap-4">

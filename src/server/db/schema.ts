@@ -11,6 +11,7 @@ import {
   pgTableCreator,
   timestamp,
   varchar,
+  text,
 } from "drizzle-orm/pg-core";
 import { number } from "zod";
 
@@ -29,17 +30,17 @@ export const product = createTable(
     title: varchar("title", { length: 1024 }).notNull(),
     description: varchar("description", { length: 4096 }).notNull(),
     price: integer("price").notNull(),
-    imgKey1: varchar("img_key_1", { length: 1024 }).notNull(),
-    imgUrl1: varchar("img_url_1", { length: 1024 }).notNull(),
-    imgKey2: varchar("img_key_2", { length: 1024 }),
-    imgUrl2: varchar("img_url_2", { length: 1024 }),
-    imgKey3: varchar("img_key_3", { length: 1024 }),
-    imgUrl3: varchar("img_url_3", { length: 1024 }),
-    videoKey: varchar("video_key", { length: 1024 }),
-    videoUrl: varchar("video_url", { length: 1024 }),
+    imgUrl: text("img_url")
+      .array()
+      .notNull()
+      .default(sql`ARRAY[]::text[]`),
+    imgKey: text("img_key")
+      .array()
+      .notNull()
+      .default(sql`ARRAY[]::text[]`),
+    inventory: integer("inventory").notNull(),
     sku: varchar("sku", { length: 1024 }),
     category_id: integer("category_id").references(() => product_category.id),
-    inventory: integer("inventory").notNull(),
     // inventory_id: integer("inventory_id")
     //   .references(() => product_inventory.id)
     //   .notNull(),
@@ -60,6 +61,11 @@ export const order = createTable("order", {
   user_id: integer("user_id")
     .references(() => customer.id)
     .notNull(),
+  products: integer("products")
+    .references(() => product.id)
+    .array()
+    .notNull()
+    .$default(() => []),
   total: decimal("total").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
@@ -157,7 +163,9 @@ export const cart_item = createTable("cart_item", {
     .notNull(),
   product_id: integer("product_id")
     .references(() => product.id)
-    .notNull(),
+    .array()
+    .notNull()
+    .$default(() => []),
   quantity: integer("quantity").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)

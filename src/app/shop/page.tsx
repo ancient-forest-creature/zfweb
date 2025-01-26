@@ -35,7 +35,7 @@ const Products = async () => {
         <div key={product.id}>
           <div className="relative max-w-sm">
             <a href="#">
-              <img src={product.imgUrl1} alt={`Image ${product.id}`} />
+              <img src={product.imgUrl[0]} alt={`Image ${product.id}`} />
             </a>
             <div className="flex flex-col items-center p-5">
               <a href="#">

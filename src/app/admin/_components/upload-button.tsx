@@ -82,23 +82,6 @@ function LoadingSpinnerSVG() {
 
 // window.makeToast = makeUploadToast;
 
-// type setProductProps = {
-//   title: string;
-//   description: string;
-//   price: number;
-//   imgKey1: string;
-//   imgUrl1: string;
-//   imgKey2?: string;
-//   imgUrl2?: string;
-//   imgKey3?: string;
-//   imgUrl3?: string;
-//   videoKey?: string;
-//   videoUrl?: string;
-//   sku?: string;
-//   inventory: number;
-//   category_id?: string;
-// };
-
 export type ErrorType = {
   message: string;
 };

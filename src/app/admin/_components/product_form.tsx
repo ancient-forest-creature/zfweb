@@ -69,20 +69,6 @@ export const ProductForm = () => {
     }
   };
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   load_db(product);
-  // await db.insert(dbProduct).values({
-  //   title: product.title,
-  //   price: product.price,
-  //   description: product.description,
-  //   imgKey1: product.imgKey1,
-  //   imgUrl1: product.imgUrl1,
-  //   inventory: product.inventory,
-  // });
-  //props.setSubmitted(true);
-  // };
-
   return (
     <div className="flex flex-col gap-4">
       {product.imgUrl1 ? (

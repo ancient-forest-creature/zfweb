@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { UploadButton } from "./upload-button";
 import { addProduct } from "./db_connect";
+import { UploadBox } from "./upload-box";
 //import { addProduct } from "~/server/db/operations";
 // import { db } from "~/server/db";
 // import { product as dbProduct } from "~/server/db/schema";
@@ -85,6 +86,15 @@ export const ProductForm = () => {
         />
         {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
       </div>
+      {/* <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
+        <h1 className="text-xl font-bold tracking-tight text-white">image 1</h1>
+      </div> */}
+      <UploadBox
+        type="image"
+        num="1"
+        onUploadComplete={onImageUpload}
+        handleUploadErrors={handleErrors}
+      />
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           <div>

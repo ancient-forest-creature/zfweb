@@ -92,13 +92,13 @@ export const ProductForm = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {product.imgUrl1 ? (
+      {/* {product.imgUrl1 ? (
         <div className="relative max-w-sm">
           <a href="#">
             <img src={product.imgUrl1} alt={"current image"} />
           </a>
         </div>
-      ) : null}
+      ) : null} */}
       <div>
         {/* <UploadButton
           onUploadComplete={onImageUpload}
@@ -110,24 +110,59 @@ export const ProductForm = () => {
         <h1 className="text-xl font-bold tracking-tight text-white">image 1</h1>
       </div> */}
       <div className="flex items-center justify-center gap-4 p-4">
-        <UploadBox
-          type="image"
-          num="1"
-          onUploadComplete={(key, url) => onImageUpload(key, url, "image", "1")}
-          handleUploadErrors={handleErrors}
-        />
-        <UploadBox
-          type="image"
-          num="2"
-          onUploadComplete={onImageUpload}
-          handleUploadErrors={handleErrors}
-        />
-        <UploadBox
-          type="image"
-          num="3"
-          onUploadComplete={onImageUpload}
-          handleUploadErrors={handleErrors}
-        />
+        {product.imgUrl1 ? (
+          <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
+            <img
+              className="h-48 w-48 object-contain"
+              src={product.imgUrl1}
+              alt="image 1"
+            />
+          </div>
+        ) : (
+          <UploadBox
+            type="image"
+            num="1"
+            onUploadComplete={(key, url) =>
+              onImageUpload(key, url, "image", "1")
+            }
+            handleUploadErrors={handleErrors}
+          />
+        )}
+        ;
+        {product.imgUrl2 ? (
+          <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
+            <img
+              className="h-48 w-48 object-contain"
+              src={product.imgUrl2}
+              alt="image 1"
+            />
+          </div>
+        ) : (
+          <UploadBox
+            type="image"
+            num="2"
+            onUploadComplete={onImageUpload}
+            handleUploadErrors={handleErrors}
+          />
+        )}
+        ;
+        {product.imgUrl3 ? (
+          <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
+            <img
+              className="h-48 w-48 object-contain"
+              src={product.imgUrl3}
+              alt="image 1"
+            />
+          </div>
+        ) : (
+          <UploadBox
+            type="image"
+            num="3"
+            onUploadComplete={onImageUpload}
+            handleUploadErrors={handleErrors}
+          />
+        )}
+        ;
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">

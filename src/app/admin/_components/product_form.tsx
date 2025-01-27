@@ -4,6 +4,7 @@ import { useState } from "react";
 import { UploadButton } from "./upload-button";
 import { addProduct } from "./db_connect";
 import { UploadBox } from "./upload-box";
+import { type } from "os";
 //import { addProduct } from "~/server/db/operations";
 // import { db } from "~/server/db";
 // import { product as dbProduct } from "~/server/db/schema";
@@ -51,9 +52,20 @@ export const ProductForm = () => {
   //console.log("errors is: ", errors);
   const [clear, setClear] = useState(false);
 
-  const onImageUpload = (key: string, url: string) => {
-    setProduct({ ...product, imgKey1: key, imgUrl1: url });
+  const onImageUpload = (
+    key: string,
+    url: string,
+    type: string,
+    num: string,
+  ) => {
+    const setKey = `${type}Key${num}`;
+    const setUrl = `${type}Url${num}`;
+    setProduct({ ...product, [setKey]: key, [setUrl]: url });
   };
+
+  // const onImageUpload = (key: string, url: string) => {
+  //   setProduct({ ...product, imgKey1: key, imgUrl1: url });
+  // };
 
   const handleErrors = (error: ErrorType) => {
     setErrors(error);
@@ -80,21 +92,35 @@ export const ProductForm = () => {
         </div>
       ) : null}
       <div>
-        <UploadButton
+        {/* <UploadButton
           onUploadComplete={onImageUpload}
           handleUploadErrors={handleErrors}
-        />
+        /> */}
         {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
       </div>
       {/* <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
         <h1 className="text-xl font-bold tracking-tight text-white">image 1</h1>
       </div> */}
-      <UploadBox
-        type="image"
-        num="1"
-        onUploadComplete={onImageUpload}
-        handleUploadErrors={handleErrors}
-      />
+      <div className="flex items-center justify-center gap-4 p-4">
+        <UploadBox
+          type="image"
+          num="1"
+          onUploadComplete={(key, url) => onImageUpload(key, url, "image", "1")}
+          handleUploadErrors={handleErrors}
+        />
+        <UploadBox
+          type="image"
+          num="2"
+          onUploadComplete={onImageUpload}
+          handleUploadErrors={handleErrors}
+        />
+        <UploadBox
+          type="image"
+          num="3"
+          onUploadComplete={onImageUpload}
+          handleUploadErrors={handleErrors}
+        />
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           <div>
@@ -167,6 +193,58 @@ export const ProductForm = () => {
             {/* {errors.description ? (
             <span style={{ color: "red" }}>{errors.description.message}</span>
           ) : null} */}
+          </div>{" "}
+          <div>
+            <label>img_Key_2: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.imgKey2}
+              readOnly
+            />
+            <br />
+            {/* {errors.description ? (
+            <span style={{ color: "red" }}>{errors.description.message}</span>
+          ) : null} */}
+          </div>
+          <div>
+            <label>img_URL_2: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.imgUrl2}
+              readOnly
+            />
+            <br />
+            {/* {errors.description ? (
+            <span style={{ color: "red" }}>{errors.description.message}</span>
+          ) : null} */}
+          </div>{" "}
+          <div>
+            <label>img_Key_3: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.imgKey3}
+              readOnly
+            />
+            <br />
+            {/* {errors.description ? (
+            <span style={{ color: "red" }}>{errors.description.message}</span>
+          ) : null} */}
+          </div>
+          <div>
+            <label>img_URL_3: </label>
+            <input
+              className="text-black"
+              type="text"
+              value={product.imgUrl3}
+              readOnly
+            />
+            <br />
+            {/* {errors.description ? (
+            <span style={{ color: "red" }}>{errors.description.message}</span>
+          ) : null} */}
           </div>
           <div>
             <label>Inventory: </label>
@@ -183,7 +261,6 @@ export const ProductForm = () => {
             <span style={{ color: "red" }}>{errors.price.message}</span>
           ) : null} */}
           </div>
-
           <button type="submit">Submit</button>
         </div>
       </form>

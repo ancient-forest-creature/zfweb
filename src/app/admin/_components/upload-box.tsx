@@ -104,7 +104,12 @@ export function UploadBox({
 }: {
   type: string;
   num?: string;
-  onUploadComplete: (key: string, url: string) => void;
+  onUploadComplete: (
+    key: string,
+    url: string,
+    type: string,
+    num: string,
+  ) => void;
   handleUploadErrors: (error: ErrorType) => void;
 }) {
   const router = useRouter();
@@ -135,7 +140,7 @@ export function UploadBox({
     onClientUploadComplete(result) {
       if (result && result[0]) {
         const { key, url } = result[0];
-        onUploadComplete(key, url);
+        onUploadComplete(key, url, type, num || "");
       }
 
       //   toast.dismiss("upload-begin");
@@ -154,7 +159,7 @@ export function UploadBox({
   return (
     <div>
       <label htmlFor="upload-button" className="cursor-pointer">
-        <ImgBox type={type} num={num} />
+        <ImgBox type={type} num={num ?? ""} />
       </label>
       <input
         id="upload-button"

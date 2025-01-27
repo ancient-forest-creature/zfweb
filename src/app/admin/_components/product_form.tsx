@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { UploadButton } from "./upload-button";
+//import { UploadButton } from "./upload-button";
 import { addProduct } from "./db_connect";
 import { UploadBox } from "./upload-box";
-import { type } from "os";
 //import { addProduct } from "~/server/db/operations";
 // import { db } from "~/server/db";
 // import { product as dbProduct } from "~/server/db/schema";
@@ -60,7 +59,16 @@ export const ProductForm = () => {
   ) => {
     const setKey = `${type}Key${num}`;
     const setUrl = `${type}Url${num}`;
-    setProduct({ ...product, [setKey]: key, [setUrl]: url });
+    console.log("setKey", setKey);
+    console.log("setUrl", setUrl);
+    //setProduct({ ...product, [setKey]: key, [setUrl]: url });
+    if (num === "1") {
+      setProduct({ ...product, imgKey1: key, imgUrl1: url });
+    } else if (num === "2") {
+      setProduct({ ...product, imgKey2: key, imgUrl2: url });
+    } else if (num === "3") {
+      setProduct({ ...product, imgKey3: key, imgUrl3: url });
+    }
   };
 
   // const onImageUpload = (key: string, url: string) => {

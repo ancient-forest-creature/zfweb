@@ -138,6 +138,7 @@ export function UploadBox({
       handleUploadErrors({ message });
     },
     onClientUploadComplete(result) {
+      console.log("oCUC result", result);
       if (result && result[0]) {
         const { key, url } = result[0];
         onUploadComplete(key, url, type, num || "");

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-//import { UploadButton } from "./upload-button";
+import { UploadButton } from "./upload-button";
 import { addProduct } from "./db_connect";
 import { UploadBox } from "./upload-box";
 import { TestBox } from "./test_box";
@@ -108,11 +108,11 @@ export const ProductForm = () => {
         </div>
       ) : null} */}
       <div>
-        {/* Upload button for testing purposes
-          <UploadButton
-          onUploadComplete={onImageUpload}
+        {/* Upload button for testing purposes*/}
+        <UploadButton
+          onUploadComplete={(key, url) => onImageUpload(key, url, "image", "1")}
           handleUploadErrors={handleErrors}
-        /> */}
+        />
         {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
       </div>
       <div className="flex items-center justify-center gap-4 p-4">

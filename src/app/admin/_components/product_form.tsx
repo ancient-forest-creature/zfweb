@@ -99,6 +99,7 @@ export const ProductForm = () => {
 
   return (
     <div className="flex flex-col gap-4">
+      {/* displays the first product image if it exists */}
       {/* {product.imgUrl1 ? (
         <div className="relative max-w-sm">
           <a href="#">
@@ -107,54 +108,41 @@ export const ProductForm = () => {
         </div>
       ) : null} */}
       <div>
-        {/* <UploadButton
+        {/* Upload button for testing purposes
+          <UploadButton
           onUploadComplete={onImageUpload}
           handleUploadErrors={handleErrors}
         /> */}
         {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
       </div>
-      {/* <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
-        <h1 className="text-xl font-bold tracking-tight text-white">image 1</h1>
-      </div> */}
       <div className="flex items-center justify-center gap-4 p-4">
         {product.imgUrl1 ? (
-          // <TestBox
-          //   CompLoader={() => showImg(product.imgUrl1, "Product image 1")}
-          //   onUploadCompleteAction={onImageUpload}
-          //   handleUploadErrorsAction={handleErrors}
-          // />
-          <div>
-            <img
-              className="h-64 w-64 object-contain"
-              src={product.imgUrl1}
-              alt="image 1"
-            />
-          </div>
-        ) : (
-          // <imageTypeContext.Provider value="image">
-          //   <imageNumContext.Provider value="1">
-          //     <TestBox
-          //       CompLoader={() => <ImgBox mediaType="image" num="1" />}
-          //       onUploadCompleteAction={onImageUpload}
-          //       handleUploadErrorsAction={handleErrors}
-          //     />
-          //   </imageNumContext.Provider>
-          // </imageTypeContext.Provider>
-
-          <UploadBox
-            mediaType="image"
-            num="1"
+          <TestBox
+            CompLoader={() => (
+              <>{showImg(product.imgUrl1, "Product image 1")}</>
+            )}
             onUploadCompleteAction={onImageUpload}
             handleUploadErrorsAction={handleErrors}
           />
+        ) : (
+          //<>{showImg(product.imgUrl1, "Product image 1")}</> // I don't understand why this works
+          //<showImg imgUrl={product.imgUrl1} altTxt="Product image 1" /> // and why this doesn't
+          //
+          <imageTypeContext.Provider value="image">
+            <imageNumContext.Provider value="1">
+              <TestBox
+                CompLoader={() => <ImgBox mediaType="image" num="1" />}
+                onUploadCompleteAction={onImageUpload}
+                handleUploadErrorsAction={handleErrors}
+              />
+            </imageNumContext.Provider>
+          </imageTypeContext.Provider>
 
           // <UploadBox
           //   mediaType="image"
           //   num="1"
-          //   onUploadComplete={(key, url) =>
-          //     onImageUpload(key, url, mediaType, key)
-          //   }
-          //   handleUploadErrors={handleErrors}
+          //   onUploadCompleteAction={onImageUpload}
+          //   handleUploadErrorsAction={handleErrors}
           // />
         )}
 

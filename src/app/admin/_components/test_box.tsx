@@ -4,6 +4,7 @@ import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { imageTypeContext, imageNumContext } from "~/app/context";
+import { ImgBox } from "./img_options";
 import { set } from "zod";
 import { ProductType } from "./product_form";
 
@@ -33,17 +34,17 @@ const useUploadThingInputProps = (...args: Input) => {
   };
 };
 
-const ImgBox = ({ type, num }: { type: string; num: string }) => {
-  return (
-    <div className="box-border flex h-64 w-64 items-center justify-center border-4 border-white p-4">
-      <h1 className="text-2xl font-bold tracking-tight text-white">
-        {type} {num}
-      </h1>
-    </div>
-  );
-};
+// const ImgBox = ({ type, num }: { type: string; num: string }) => {
+//   return (
+//     <div className="box-border flex h-64 w-64 items-center justify-center border-4 border-white p-4">
+//       <h1 className="text-2xl font-bold tracking-tight text-white">
+//         {type} {num}
+//       </h1>
+//     </div>
+//   );
+// };
 
-const CompLoader = () => <ImgBox type="image" num="1" />;
+//const CompLoader = () => <ImgBox mediaType="image" num="1" />;
 
 export type ErrorType = {
   message: string;
@@ -94,6 +95,8 @@ export function TestBox({
         const { key, url } = result[0];
         const mediaType = useContext(imageTypeContext);
         const num = useContext(imageNumContext);
+        console.log("mediaType after set", mediaType);
+        console.log("num after set", num);
         onUploadCompleteAction(key, url, mediaType, num);
       }
 
@@ -110,11 +113,15 @@ export function TestBox({
     },
   });
 
+  console.log("CompLoader", CompLoader);
+  //   console.log("CL type", typeof CompLoader);
+  //   console.log("CL keys", Object.keys(CompLoader));
+
   return (
     <div>
       <label htmlFor="upload-box" className="cursor-pointer">
         <div className="h-64 w-64">
-          {/* <ImgBox type={mediaType} num={num ?? ""} /> */}
+          {/* <ImgBox mediaType={mediaType} num={num ?? ""} /> */}
           <CompLoader />
         </div>
       </label>

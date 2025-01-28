@@ -4,6 +4,10 @@ import { useState } from "react";
 //import { UploadButton } from "./upload-button";
 import { addProduct } from "./db_connect";
 import { UploadBox } from "./upload-box";
+import { TestBox } from "./test_box";
+import { imageTypeContext, imageNumContext } from "~/app/context";
+import { useContext } from "react";
+import { ImgBox, showImg } from "./img_options";
 //import { addProduct } from "~/server/db/operations";
 // import { db } from "~/server/db";
 // import { product as dbProduct } from "~/server/db/schema";
@@ -46,6 +50,9 @@ export const ProductForm = () => {
     inventory: 0,
   });
 
+  const mediaType = useContext(imageTypeContext);
+  const num = useContext(imageNumContext);
+
   const [errors, setErrors] = useState<ErrorType>();
   //const btnText = initTitle ? "Update" : "Create";
   //console.log("errors is: ", errors);
@@ -54,11 +61,11 @@ export const ProductForm = () => {
   const onImageUpload = (
     key: string,
     url: string,
-    type: string,
-    num: string,
+    mediaType?: string,
+    num?: string,
   ) => {
-    const setKey = `${type}Key${num}`;
-    const setUrl = `${type}Url${num}`;
+    const setKey = `${mediaType}Key${num}`;
+    const setUrl = `${mediaType}Url${num}`;
     console.log("setKey", setKey);
     console.log("setUrl", setUrl);
     //setProduct({ ...product, [setKey]: key, [setUrl]: url });
@@ -111,58 +118,79 @@ export const ProductForm = () => {
       </div> */}
       <div className="flex items-center justify-center gap-4 p-4">
         {product.imgUrl1 ? (
-          <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
+          // <TestBox
+          //   CompLoader={() => showImg(product.imgUrl1, "Product image 1")}
+          //   onUploadCompleteAction={onImageUpload}
+          //   handleUploadErrorsAction={handleErrors}
+          // />
+          <div>
             <img
-              className="h-48 w-48 object-contain"
+              className="h-64 w-64 object-contain"
               src={product.imgUrl1}
               alt="image 1"
             />
           </div>
         ) : (
+          // <imageTypeContext.Provider value="image">
+          //   <imageNumContext.Provider value="1">
+          //     <TestBox
+          //       CompLoader={() => <ImgBox mediaType="image" num="1" />}
+          //       onUploadCompleteAction={onImageUpload}
+          //       handleUploadErrorsAction={handleErrors}
+          //     />
+          //   </imageNumContext.Provider>
+          // </imageTypeContext.Provider>
+
           <UploadBox
-            type="image"
+            mediaType="image"
             num="1"
-            onUploadComplete={(key, url) =>
-              onImageUpload(key, url, "image", "1")
-            }
-            handleUploadErrors={handleErrors}
+            onUploadCompleteAction={onImageUpload}
+            handleUploadErrorsAction={handleErrors}
           />
+
+          // <UploadBox
+          //   mediaType="image"
+          //   num="1"
+          //   onUploadComplete={(key, url) =>
+          //     onImageUpload(key, url, mediaType, key)
+          //   }
+          //   handleUploadErrors={handleErrors}
+          // />
         )}
-        ;
+
         {product.imgUrl2 ? (
-          <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
+          <div>
             <img
-              className="h-48 w-48 object-contain"
+              className="h-64 w-64 object-contain"
               src={product.imgUrl2}
-              alt="image 1"
+              alt="image 2"
             />
           </div>
         ) : (
           <UploadBox
-            type="image"
+            mediaType="image"
             num="2"
-            onUploadComplete={onImageUpload}
-            handleUploadErrors={handleErrors}
+            onUploadCompleteAction={onImageUpload}
+            handleUploadErrorsAction={handleErrors}
           />
         )}
-        ;
+
         {product.imgUrl3 ? (
-          <div className="box-border flex h-48 w-48 items-center justify-center border-4 border-white p-4">
+          <div>
             <img
-              className="h-48 w-48 object-contain"
+              className="h-64 w-64 object-contain"
               src={product.imgUrl3}
-              alt="image 1"
+              alt="image 3"
             />
           </div>
         ) : (
           <UploadBox
-            type="image"
+            mediaType="image"
             num="3"
-            onUploadComplete={onImageUpload}
-            handleUploadErrors={handleErrors}
+            onUploadCompleteAction={onImageUpload}
+            handleUploadErrorsAction={handleErrors}
           />
         )}
-        ;
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">

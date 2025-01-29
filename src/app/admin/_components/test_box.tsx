@@ -3,8 +3,9 @@
 import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { imageTypeContext, imageNumContext } from "~/app/_context/context";
-import { ImgBox } from "./img_options";
+import { useImageUpload } from "~/app/_context/ImgUploadContext";
+import { useProduct } from "~/app/_context/ProductContext";
+import { ImgBox, ShowImg } from "./img_options";
 import { set } from "zod";
 import { ProductType } from "./product_form";
 
@@ -51,21 +52,24 @@ export type ErrorType = {
 };
 
 export function TestBox({
-  CompLoader,
   onUploadCompleteAction,
   handleUploadErrorsAction,
 }: {
-  CompLoader: React.FC;
   onUploadCompleteAction: (
     key: string,
     url: string,
-    Mediatype?: string,
+    mediaType?: string,
     num?: string,
   ) => void;
   handleUploadErrorsAction: (error: ErrorType) => void;
 }) {
   const router = useRouter();
   //const posthog = usePostHog();
+  const { product } = useProduct();
+  const { imgUpload } = useImageUpload();
+
+  console.log("product", product);
+  console.log("imgUpload", imgUpload);
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
     onUploadBegin() {
@@ -93,11 +97,11 @@ export function TestBox({
       console.log("oCUC result", result);
       if (result && result[0]) {
         const { key, url } = result[0];
-        const mediaType = useContext(imageTypeContext);
-        const num = useContext(imageNumContext);
-        console.log("mediaType after set", mediaType);
-        console.log("num after set", num);
-        onUploadCompleteAction(key, url, mediaType, num);
+        // const mediaType = useContext(imageTypeContext);
+        // const num = useContext(imageNumContext);
+        // console.log("mediaType after set", mediaType);
+        // console.log("num after set", num);
+        onUploadCompleteAction(key, url, imgUpload.mediaType, imgUpload.num);
       }
 
       //   toast.dismiss("upload-begin");
@@ -113,16 +117,16 @@ export function TestBox({
     },
   });
 
-  console.log("CompLoader", CompLoader);
-  //   console.log("CL type", typeof CompLoader);
-  //   console.log("CL keys", Object.keys(CompLoader));
-
   return (
     <div>
       <label htmlFor="upload-box" className="cursor-pointer">
         <div className="h-64 w-64">
           {/* <ImgBox mediaType={mediaType} num={num ?? ""} /> */}
-          <CompLoader />
+          {product.imgUrl1 ? (
+            <ShowImg imgUrl={product.imgKey1} altTxt={"Product Image"} />
+          ) : (
+            <ImgBox mediaType={imgUpload.mediaType} num={imgUpload.num ?? ""} />
+          )}
         </div>
       </label>
       <input id="upload-box" type="file" className="sr-only" {...inputProps} />

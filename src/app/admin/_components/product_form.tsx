@@ -9,6 +9,7 @@ import { imageTypeContext, imageNumContext } from "~/app/_context/context";
 import { useContext } from "react";
 import { ImgBox, ShowImg } from "./img_options";
 import { useProduct } from "~/app/_context/ProductContext";
+import { useImageUpload } from "~/app/_context/ImgUploadContext";
 //import { addProduct } from "~/server/db/operations";
 // import { db } from "~/server/db";
 // import { product as dbProduct } from "~/server/db/schema";
@@ -51,9 +52,10 @@ export const ProductForm = () => {
   //   inventory: 0,
   // });
   const { product, setProduct } = useProduct();
+  const { imgUpload, setImgUpload } = useImageUpload();
 
-  const mediaType = useContext(imageTypeContext);
-  const num = useContext(imageNumContext);
+  // const mediaType = useContext(imageTypeContext);
+  // const num = useContext(imageNumContext);
 
   const [errors, setErrors] = useState<ErrorType>();
   //const btnText = initTitle ? "Update" : "Create";
@@ -118,31 +120,34 @@ export const ProductForm = () => {
         {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
       </div>
       <div className="flex items-center justify-center gap-4 p-4">
-        {product.imgUrl1 ? (
-          <TestBox
-            onUploadCompleteAction={onImageUpload}
-            handleUploadErrorsAction={handleErrors}
-          />
-        ) : (
-          //<>{showImg(product.imgUrl1, "Product image 1")}</> // I don't understand why this works
+        {/* setImgUpload({ mediaType: "image", num: "1" }); */}
+        <TestBox
+          mediaType="image"
+          num="1"
+          onUploadCompleteAction={onImageUpload}
+          handleUploadErrorsAction={handleErrors}
+        />
+        {/* {product.imgUrl1 ? ( */}
+        {/* ) : ( */}
+        {/* //<>{showImg(product.imgUrl1, "Product image 1")}</> // I don't understand why this works
           //<showImg imgUrl={product.imgUrl1} altTxt="Product image 1" /> // and why this doesn't
           //
-          <imageTypeContext.Provider value="image">
-            <imageNumContext.Provider value="1">
-              <TestBox
-                onUploadCompleteAction={onImageUpload}
-                handleUploadErrorsAction={handleErrors}
-              />
-            </imageNumContext.Provider>
-          </imageTypeContext.Provider>
+          // <imageTypeContext.Provider value="image">
+          //   <imageNumContext.Provider value="1">
+          //     <TestBox
+          //       onUploadCompleteAction={onImageUpload}
+          //       handleUploadErrorsAction={handleErrors}
+          //     />
+          //   </imageNumContext.Provider>
+          // </imageTypeContext.Provider> */}
 
-          // <UploadBox
+        {/* // <UploadBox
           //   mediaType="image"
           //   num="1"
           //   onUploadCompleteAction={onImageUpload}
           //   handleUploadErrorsAction={handleErrors}
           // />
-        )}
+        )} */}
 
         {product.imgUrl2 ? (
           <div>

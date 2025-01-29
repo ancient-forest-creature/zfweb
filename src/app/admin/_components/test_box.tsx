@@ -52,9 +52,13 @@ export type ErrorType = {
 };
 
 export function TestBox({
+  mediaType,
+  num,
   onUploadCompleteAction,
   handleUploadErrorsAction,
 }: {
+  mediaType: string;
+  num?: string;
   onUploadCompleteAction: (
     key: string,
     url: string,
@@ -101,7 +105,7 @@ export function TestBox({
         // const num = useContext(imageNumContext);
         // console.log("mediaType after set", mediaType);
         // console.log("num after set", num);
-        onUploadCompleteAction(key, url, imgUpload.mediaType, imgUpload.num);
+        onUploadCompleteAction(key, url, mediaType, num);
       }
 
       //   toast.dismiss("upload-begin");
@@ -125,7 +129,7 @@ export function TestBox({
           {product.imgUrl1 ? (
             <ShowImg imgUrl={product.imgKey1} altTxt={"Product Image"} />
           ) : (
-            <ImgBox mediaType={imgUpload.mediaType} num={imgUpload.num ?? ""} />
+            <ImgBox mediaType={mediaType} num={num ?? ""} />
           )}
         </div>
       </label>

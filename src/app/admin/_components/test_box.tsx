@@ -3,7 +3,7 @@
 import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { useImageUpload } from "~/app/_context/ImgUploadContext";
+// import { useImageUpload } from "~/app/_context/ImgUploadContext";
 import { useProduct } from "~/app/_context/ProductContext";
 import { ImgBox, ShowImg } from "./img_options";
 import { set } from "zod";
@@ -70,10 +70,10 @@ export function TestBox({
   const router = useRouter();
   //const posthog = usePostHog();
   const { product } = useProduct();
-  const { imgUpload } = useImageUpload();
+  //   const { imgUpload } = useImageUpload();
 
   console.log("product", product);
-  console.log("imgUpload", imgUpload);
+  //   console.log("imgUpload", imgUpload);
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
     onUploadBegin() {
@@ -121,15 +121,19 @@ export function TestBox({
     },
   });
 
+  const mediaText = mediaType === "img" ? "Image" : "Video";
+  const urlHolder = `${mediaType}Url${num}`;
+  //console.log("urlHolder testbox", urlHolder);
+
   return (
     <div>
       <label htmlFor="upload-box" className="cursor-pointer">
         <div className="h-64 w-64">
           {/* <ImgBox mediaType={mediaType} num={num ?? ""} /> */}
           {product.imgUrl1 ? (
-            <ShowImg imgUrl={product.imgKey1} altTxt={"Product Image"} />
+            <ShowImg imgUrl={product.imgUrl1} altTxt={"Product Image"} />
           ) : (
-            <ImgBox mediaType={mediaType} num={num ?? ""} />
+            <ImgBox mediaType={mediaText} num={num ?? ""} />
           )}
         </div>
       </label>

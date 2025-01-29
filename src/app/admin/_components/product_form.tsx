@@ -70,16 +70,9 @@ export const ProductForm = () => {
   ) => {
     const setKey = `${mediaType}Key${num}`;
     const setUrl = `${mediaType}Url${num}`;
-    console.log("setKey", setKey);
-    console.log("setUrl", setUrl);
-    //setProduct({ ...product, [setKey]: key, [setUrl]: url });
-    if (num === "1") {
-      setProduct({ ...product, imgKey1: key, imgUrl1: url });
-    } else if (num === "2") {
-      setProduct({ ...product, imgKey2: key, imgUrl2: url });
-    } else if (num === "3") {
-      setProduct({ ...product, imgKey3: key, imgUrl3: url });
-    }
+    // console.log("setKey", setKey);
+    // console.log("setUrl", setUrl);
+    setProduct({ ...product, [setKey]: key, [setUrl]: url });
   };
 
   // const onImageUpload = (key: string, url: string) => {
@@ -114,7 +107,7 @@ export const ProductForm = () => {
       <div>
         {/* Upload button for testing purposes*/}
         <UploadButton
-          onUploadComplete={(key, url) => onImageUpload(key, url, "image", "1")}
+          onUploadComplete={(key, url) => onImageUpload(key, url, "img", "1")}
           handleUploadErrors={handleErrors}
         />
         {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null}
@@ -122,7 +115,7 @@ export const ProductForm = () => {
       <div className="flex items-center justify-center gap-4 p-4">
         {/* setImgUpload({ mediaType: "image", num: "1" }); */}
         <TestBox
-          mediaType="image"
+          mediaType="img"
           num="1"
           onUploadCompleteAction={onImageUpload}
           handleUploadErrorsAction={handleErrors}

@@ -107,7 +107,7 @@ export function UploadBox({
   onUploadCompleteAction: (
     key: string,
     url: string,
-    type: string,
+    Mediatype: string,
     num: string,
   ) => void;
   handleUploadErrorsAction: (error: ErrorType) => void;

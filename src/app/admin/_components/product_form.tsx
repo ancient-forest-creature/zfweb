@@ -5,9 +5,10 @@ import { UploadButton } from "./upload-button";
 import { addProduct } from "./db_connect";
 import { UploadBox } from "./upload-box";
 import { TestBox } from "./test_box";
-import { imageTypeContext, imageNumContext } from "~/app/context";
+import { imageTypeContext, imageNumContext } from "~/app/_context/context";
 import { useContext } from "react";
-import { ImgBox, showImg } from "./img_options";
+import { ImgBox, ShowImg } from "./img_options";
+import { useProduct } from "~/app/_context/ProductContext";
 //import { addProduct } from "~/server/db/operations";
 // import { db } from "~/server/db";
 // import { product as dbProduct } from "~/server/db/schema";
@@ -41,14 +42,15 @@ export type ProductType = {
 
 export const ProductForm = () => {
   //const {initTitle, initPrice, initDescription, onSubmitProp} = props;
-  const [product, setProduct] = useState<ProductType>({
-    title: "",
-    price: 0,
-    description: "",
-    imgKey1: "",
-    imgUrl1: "",
-    inventory: 0,
-  });
+  // const [product, setProduct] = useState<ProductType>({
+  //   title: "",
+  //   price: 0,
+  //   description: "",
+  //   imgKey1: "",
+  //   imgUrl1: "",
+  //   inventory: 0,
+  // });
+  const { product, setProduct } = useProduct();
 
   const mediaType = useContext(imageTypeContext);
   const num = useContext(imageNumContext);
@@ -118,9 +120,6 @@ export const ProductForm = () => {
       <div className="flex items-center justify-center gap-4 p-4">
         {product.imgUrl1 ? (
           <TestBox
-            CompLoader={() => (
-              <>{showImg(product.imgUrl1, "Product image 1")}</>
-            )}
             onUploadCompleteAction={onImageUpload}
             handleUploadErrorsAction={handleErrors}
           />
@@ -131,7 +130,6 @@ export const ProductForm = () => {
           <imageTypeContext.Provider value="image">
             <imageNumContext.Provider value="1">
               <TestBox
-                CompLoader={() => <ImgBox mediaType="image" num="1" />}
                 onUploadCompleteAction={onImageUpload}
                 handleUploadErrorsAction={handleErrors}
               />

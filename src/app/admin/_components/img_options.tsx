@@ -14,7 +14,13 @@ export const ImgBox = ({
   );
 };
 
-export const showImg = (imgUrl: string, altTxt: string) => {
+export const ShowImg = ({
+  imgUrl,
+  altTxt,
+}: {
+  imgUrl: string;
+  altTxt: string;
+}) => {
   return (
     <div>
       <img className="h-64 w-64 object-contain" src={imgUrl} alt={altTxt} />

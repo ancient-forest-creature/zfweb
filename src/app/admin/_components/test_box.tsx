@@ -3,7 +3,7 @@
 import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { imageTypeContext, imageNumContext } from "~/app/context";
+import { imageTypeContext, imageNumContext } from "~/app/_context/context";
 import { ImgBox } from "./img_options";
 import { set } from "zod";
 import { ProductType } from "./product_form";

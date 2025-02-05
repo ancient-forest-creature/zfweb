@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { UploadButton } from "./UploadButton";
-import { addProduct } from "./DbConnect";
+import { addProduct } from "./db_connect";
 import { UploadBox } from "./UploadBox";
 import { useContext } from "react";
 import { ImgBox, ShowImg } from "./ImgOptions";

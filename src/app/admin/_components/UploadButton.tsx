@@ -3,7 +3,7 @@
 import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { set } from "zod";
-import { ProductType } from "./__product_form";
+import { ProductType } from "./__ProductForm";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -50,16 +50,6 @@ function UploadSVG() {
   );
 }
 
-const ImgBox = ({ type, num }: { type: string; num: string }) => {
-  return (
-    <div className="box-border flex h-64 w-64 items-center justify-center border-4 border-white p-4">
-      <h1 className="text-2xl font-bold tracking-tight text-white">
-        {type} {num}
-      </h1>
-    </div>
-  );
-};
-
 function LoadingSpinnerSVG() {
   return (
     <svg
@@ -96,21 +86,12 @@ export type ErrorType = {
   message: string;
 };
 
-export function UploadBox({
-  mediaType,
-  num,
-  onUploadCompleteAction,
-  handleUploadErrorsAction,
+export function UploadButton({
+  onUploadComplete,
+  handleUploadErrors,
 }: {
-  mediaType: string;
-  num?: string;
-  onUploadCompleteAction: (
-    key: string,
-    url: string,
-    Mediatype: string,
-    num: string,
-  ) => void;
-  handleUploadErrorsAction: (error: ErrorType) => void;
+  onUploadComplete: (key: string, url: string) => void;
+  handleUploadErrors: (error: ErrorType) => void;
 }) {
   const router = useRouter();
   //const posthog = usePostHog();
@@ -135,13 +116,12 @@ export function UploadBox({
       //   toast.error(`Error uploading image - ${error.message}`);
       const message = error.message;
       console.error("Error uploading image", message);
-      handleUploadErrorsAction({ message });
+      handleUploadErrors({ message });
     },
     onClientUploadComplete(result) {
-      console.log("oCUC result", result);
       if (result && result[0]) {
         const { key, url } = result[0];
-        onUploadCompleteAction(key, url, mediaType, num || "");
+        onUploadComplete(key, url);
       }
 
       //   toast.dismiss("upload-begin");
@@ -159,10 +139,15 @@ export function UploadBox({
 
   return (
     <div>
-      <label htmlFor="upload-box" className="cursor-pointer">
-        <ImgBox type={mediaType} num={num ?? ""} />
+      <label htmlFor="upload-button" className="cursor-pointer">
+        <UploadSVG />
       </label>
-      <input id="upload-box" type="file" className="sr-only" {...inputProps} />
+      <input
+        id="upload-button"
+        type="file"
+        className="sr-only"
+        {...inputProps}
+      />
     </div>
   );
 }

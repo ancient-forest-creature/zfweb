@@ -2,7 +2,7 @@
 
 import { db } from "~/server/db";
 import { product as dbProduct } from "~/server/db/schema";
-import { ProductType } from "./__product_form";
+import { ProductType } from "./__ProductForm";
 import { object } from "zod";
 
 export const addProduct = async (product: ProductType) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ImgBox, ShowImg } from "./img_options";
+import { ImgBox, ShowImg } from "./ImgOptions";
 
 const FileSelector = ({ num }: { num: string }) => {
   const [filePath, setFilePath] = React.useState<string>("");

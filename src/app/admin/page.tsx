@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { ProductProvider } from "../_context/ProductContext";
 import { ImgUploadProvider } from "../_context/ImgUploadContext";
-import { ProductForm } from "./_components/product_form";
+import { ProductForm } from "./_components/ProductForm";
 import { FileProvider } from "../_context/FileContext";
 
 export default function HomePage() {

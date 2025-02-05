@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { addProduct } from "./db_connect";
-import { TestBox } from "./test_box";
-import { NewBox } from "./new_box";
+import { addProduct } from "./DbConnect";
 import { useProduct } from "~/app/_context/ProductContext";
 import { useImageUpload } from "~/app/_context/ImgUploadContext";
 import FileSelector from "./FileSelector";

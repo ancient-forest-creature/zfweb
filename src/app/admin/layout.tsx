@@ -1,5 +1,5 @@
 import "~/styles/globals.css";
-import { TopNav } from "./_components/topnav";
+import { TopNav } from "./_components/TopNav";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { GeistSans } from "geist/font/sans";

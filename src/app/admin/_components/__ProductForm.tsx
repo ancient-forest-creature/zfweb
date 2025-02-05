@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { UploadButton } from "./upload-button";
-import { addProduct } from "./db_connect";
-import { UploadBox } from "./upload-box";
-import { TestBox } from "./test_box";
-import { imageTypeContext, imageNumContext } from "~/app/_context/context";
+import { UploadButton } from "./UploadButton";
+import { addProduct } from "./DbConnect";
+import { UploadBox } from "./UploadBox";
 import { useContext } from "react";
-import { ImgBox, ShowImg } from "./img_options";
+import { ImgBox, ShowImg } from "./ImgOptions";
 import { useProduct } from "~/app/_context/ProductContext";
 import { useImageUpload } from "~/app/_context/ImgUploadContext";
 //import { addProduct } from "~/server/db/operations";
@@ -160,12 +158,12 @@ export const ProductForm = () => {
           ))
         )}
 
-        <TestBox
+        {/* <TestBox
           mediaType="img"
           num="2"
           //onUploadCompleteAction={onImageUpload}
           handleUploadErrorsAction={handleErrors}
-        />
+        /> */}
         {/* {product.imgUrl2 ? (
           <div>
             <img

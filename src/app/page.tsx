@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { db } from "~/server/db";
 import Image from "next/image";
+import { FileProvider } from "./_context/FileContext";
 
 export const dynamic = "force-dynamic";
 
@@ -8,13 +9,15 @@ export const dynamic = "force-dynamic";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <Image
-        src="https://utfs.io/f/CP1vGQdmthxyPSxgXafaQqdfG2FMOt1A6sEkLVNghCU7nyxm"
-        width={3333}
-        height={1304}
-        alt="Zilka Forgewerks Logo"
-      />
-    </main>
+    <FileProvider>
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4">
+        <Image
+          src="https://utfs.io/f/CP1vGQdmthxyPSxgXafaQqdfG2FMOt1A6sEkLVNghCU7nyxm"
+          width={3333}
+          height={1304}
+          alt="Zilka Forgewerks Logo"
+        />
+      </main>
+    </FileProvider>
   );
 }

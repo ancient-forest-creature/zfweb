@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { UploadButton } from "./upload-button";
 import { addProduct } from "./db_connect";
+import { UploadBox } from "./upload-box";
 import { TestBox } from "./test_box";
-import { NewBox } from "./new_box";
+import { imageTypeContext, imageNumContext } from "~/app/_context/context";
+import { useContext } from "react";
+import { ImgBox, ShowImg } from "./img_options";
 import { useProduct } from "~/app/_context/ProductContext";
 import { useImageUpload } from "~/app/_context/ImgUploadContext";
-import FileSelector from "./FileSelector";
-import { useFile } from "~/app/_context/FileContext";
+//import { addProduct } from "~/server/db/operations";
+// import { db } from "~/server/db";
+// import { product as dbProduct } from "~/server/db/schema";
 
 export type ErrorType = {
   message: string;
@@ -38,28 +43,45 @@ export type ProductType = {
 };
 
 export const ProductForm = () => {
+  //const {initTitle, initPrice, initDescription, onSubmitProp} = props;
+  // const [product, setProduct] = useState<ProductType>({
+  //   title: "",
+  //   price: 0,
+  //   description: "",
+  //   imgKey1: "",
+  //   imgUrl1: "",
+  //   inventory: 0,
+  // });
   const { product, setProduct } = useProduct();
   const { imgUpload, setImgUpload } = useImageUpload();
-  const [errors, setErrors] = useState<ErrorType>();
-  const [clear, setClear] = useState(false);
-  const { filePath, fileName, setFilePath, setFileName } = useFile();
-  //   const onImageUpload = (
-  //     key: string,
-  //     url: string,
-  //     mediaType?: string,
-  //     num?: string,
-  //   ) => {
-  //     console.log("mediaType oIU", mediaType);
-  //     console.log("num oIU", num);
-  //     const setKey = `${mediaType}Key${num}`;
-  //     const setUrl = `${mediaType}Url${num}`;
-  //     console.log("setKey", setKey);
-  //     console.log("setUrl", setUrl);
-  //     setProduct({ ...product, [setKey]: key, [setUrl]: url });
-  //     console.log("product", product);
-  //   };
 
-  // console.log("filePath", filePath);
+  // const mediaType = useContext(imageTypeContext);
+  // const num = useContext(imageNumContext);
+
+  const [errors, setErrors] = useState<ErrorType>();
+  //const btnText = initTitle ? "Update" : "Create";
+  //console.log("errors is: ", errors);
+  const [clear, setClear] = useState(false);
+
+  const onImageUpload = (
+    key: string,
+    url: string,
+    mediaType?: string,
+    num?: string,
+  ) => {
+    console.log("mediaType oIU", mediaType);
+    console.log("num oIU", num);
+    const setKey = `${mediaType}Key${num}`;
+    const setUrl = `${mediaType}Url${num}`;
+    console.log("setKey", setKey);
+    console.log("setUrl", setUrl);
+    setProduct({ ...product, [setKey]: key, [setUrl]: url });
+    console.log("product", product);
+  };
+
+  // const onImageUpload = (key: string, url: string) => {
+  //   setProduct({ ...product, imgKey1: key, imgUrl1: url });
+  // };
 
   const handleErrors = (error: ErrorType) => {
     setErrors(error);
@@ -78,10 +100,105 @@ export const ProductForm = () => {
 
   return (
     <div className="flex flex-col gap-4">
+      {/* displays the first product image if it exists */}
+      {/* {product.imgUrl1 ? (
+        <div className="relative max-w-sm">
+          <a href="#">
+            <img src={product.imgUrl1} alt={"current image"} />
+          </a>
+        </div>
+      ) : null} */}
+      <div>
+        {/* Upload button for testing purposes*/}
+        {/* <UploadButton
+          onUploadComplete={(key, url) => onImageUpload(key, url, "img", "1")}
+          handleUploadErrors={handleErrors}
+        />
+        {errors ? <span style={{ color: "red" }}>{errors.message}</span> : null} */}
+      </div>
       <div className="flex items-center justify-center gap-4 p-4">
-        <FileSelector num="1" />
-        <FileSelector num="2" />
-        <FileSelector num="3" />
+        {/* setImgUpload({ mediaType: "image", num: "1" }); */}
+        {/* <TestBox
+          mediaType="img"
+          num="1"
+          onUploadCompleteAction={onImageUpload}
+          handleUploadErrorsAction={handleErrors}
+        />
+        <TestBox
+          mediaType="img"
+          num="2"
+          onUploadCompleteAction={onImageUpload}
+          handleUploadErrorsAction={handleErrors}
+        />
+        <TestBox
+          mediaType="img"
+          num="3"
+          onUploadCompleteAction={onImageUpload}
+          handleUploadErrorsAction={handleErrors}
+        /> */}
+        {product.imgUrl1 ? (
+          <ShowImg imgUrl={product.imgUrl1} altTxt="Product image 1" /> // and why this doesn't
+        ) : (
+          // <>{showImg(product.imgUrl1, "Product image 1")}</> // I don't understand why this works
+          //
+          // <imageTypeContext.Provider value="image">
+          //   <imageNumContext.Provider value="1">
+          //     <TestBox
+          //       onUploadCompleteAction={onImageUpload}
+          //       handleUploadErrorsAction={handleErrors}
+          //     />
+          //   </imageNumContext.Provider>
+          // </imageTypeContext.Provider> */}
+          (console.log("product", product),
+          (
+            <UploadBox
+              mediaType="img"
+              num="1"
+              onUploadCompleteAction={onImageUpload}
+              handleUploadErrorsAction={handleErrors}
+            />
+          ))
+        )}
+
+        <TestBox
+          mediaType="img"
+          num="2"
+          //onUploadCompleteAction={onImageUpload}
+          handleUploadErrorsAction={handleErrors}
+        />
+        {/* {product.imgUrl2 ? (
+          <div>
+            <img
+              className="h-64 w-64 object-contain"
+              src={product.imgUrl2}
+              alt="image 2"
+            />
+          </div>
+        ) : (
+          <UploadBox
+            mediaType="img"
+            num="2"
+            onUploadCompleteAction={onImageUpload}
+            handleUploadErrorsAction={handleErrors}
+          />
+        )} */}
+
+        {product.imgUrl3 ? (
+          <div>
+            <img
+              className="h-64 w-64 object-contain"
+              src={product.imgUrl3}
+              alt="image 3"
+            />
+          </div>
+        ) : (
+          <UploadBox
+            mediaType="img"
+            num="3"
+            onUploadCompleteAction={onImageUpload}
+            handleUploadErrorsAction={handleErrors}
+          />
+        )}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">

@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { useProduct } from "~/app/_context/ProductContext";
 import { ImgBox, ShowImg } from "./img_options";
 import { set } from "zod";
-import { ProductType } from "./product_form";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -35,18 +34,6 @@ const useUploadThingInputProps = (...args: Input) => {
   };
 };
 
-// const ImgBox = ({ type, num }: { type: string; num: string }) => {
-//   return (
-//     <div className="box-border flex h-64 w-64 items-center justify-center border-4 border-white p-4">
-//       <h1 className="text-2xl font-bold tracking-tight text-white">
-//         {type} {num}
-//       </h1>
-//     </div>
-//   );
-// };
-
-//const CompLoader = () => <ImgBox mediaType="image" num="1" />;
-
 export type ErrorType = {
   message: string;
 };
@@ -54,25 +41,24 @@ export type ErrorType = {
 export function TestBox({
   mediaType,
   num,
-  onUploadCompleteAction,
   handleUploadErrorsAction,
 }: {
   mediaType: string;
   num?: string;
-  onUploadCompleteAction: (
-    key: string,
-    url: string,
-    mediaType?: string,
-    num?: string,
-  ) => void;
   handleUploadErrorsAction: (error: ErrorType) => void;
 }) {
   const router = useRouter();
   //const posthog = usePostHog();
-  const { product } = useProduct();
+  const { product, setProduct } = useProduct();
+  const localMedia = mediaType;
+  const localNum = num;
   //   const { imgUpload } = useImageUpload();
 
-  console.log("product", product);
+  //   console.log("product", product);
+  //   console.log("mediaType tb entry", mediaType);
+  //   console.log("num tb entry", num);
+  console.log("localMedia", localMedia);
+  console.log("localNum", localNum);
   //   console.log("imgUpload", imgUpload);
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
@@ -99,13 +85,20 @@ export function TestBox({
     },
     onClientUploadComplete(result) {
       console.log("oCUC result", result);
+      console.log("result[0]", result[0]);
       if (result && result[0]) {
         const { key, url } = result[0];
+        console.log("key oCUC", key);
         // const mediaType = useContext(imageTypeContext);
         // const num = useContext(imageNumContext);
         // console.log("mediaType after set", mediaType);
         // console.log("num after set", num);
-        onUploadCompleteAction(key, url, mediaType, num);
+        //onUploadCompleteAction(key, url, localMedia, localNum);
+        const setKey = `${localMedia}Key${localNum}`;
+        const setUrl = `${localMedia}Url${localNum}`;
+        console.log("setKey oCUC", setKey);
+        console.log("setUrl oCUC", setUrl);
+        setProduct({ ...product, [setKey]: key, [setUrl]: url });
       }
 
       //   toast.dismiss("upload-begin");
@@ -121,19 +114,26 @@ export function TestBox({
     },
   });
 
-  const mediaText = mediaType === "img" ? "Image" : "Video";
-  const urlHolder = `${mediaType}Url${num}`;
-  //console.log("urlHolder testbox", urlHolder);
+  const mediaText = localMedia === "img" ? "Image" : "Video";
+  const urlHolder = `${localMedia}Url${localNum}`;
+  const altTxt = `Product Image ${localNum}`;
+
+  console.log("urlHolder ", urlHolder);
 
   return (
     <div>
       <label htmlFor="upload-box" className="cursor-pointer">
         <div className="h-64 w-64">
           {/* <ImgBox mediaType={mediaType} num={num ?? ""} /> */}
-          {product.imgUrl1 ? (
-            <ShowImg imgUrl={product.imgUrl1} altTxt={"Product Image"} />
+          {product[urlHolder as keyof typeof product] ? (
+            <ShowImg
+              imgUrl={
+                (product[urlHolder as keyof typeof product] as string) || ""
+              }
+              altTxt={altTxt}
+            />
           ) : (
-            <ImgBox mediaType={mediaText} num={num ?? ""} />
+            <ImgBox mediaType={mediaText} num={localNum ?? ""} />
           )}
         </div>
       </label>

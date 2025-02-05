@@ -3,8 +3,9 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
 interface imgUploadType {
-  mediaType: string;
-  num: string;
+  path1: string;
+  path2: string;
+  path3: string;
 }
 
 interface imgUploadContextType {
@@ -18,8 +19,9 @@ const ImgUploadContext = createContext<imgUploadContextType | undefined>(
 
 export const ImgUploadProvider = ({ children }: { children: ReactNode }) => {
   const [imgUpload, setImgUpload] = useState<imgUploadType>({
-    mediaType: "",
-    num: "",
+    path1: "",
+    path2: "",
+    path3: "",
   });
 
   return (

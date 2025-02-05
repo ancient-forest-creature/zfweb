@@ -1,5 +1,5 @@
 import "~/styles/globals.css";
-import { TopNav } from "./_components/TopNav";
+import { TopNav } from "./_components/topnav";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";

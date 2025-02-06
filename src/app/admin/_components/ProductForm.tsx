@@ -40,7 +40,7 @@ export const ProductForm = () => {
   const { imgUpload, setImgUpload } = useImageUpload();
   const [errors, setErrors] = useState<ErrorType>();
   const [clear, setClear] = useState(false);
-  const { filePath, fileName, setFilePath, setFileName } = useFile();
+  //const { filePath, fileName, setFilePath, setFileName } = useFile();
   //   const onImageUpload = (
   //     key: string,
   //     url: string,
@@ -58,6 +58,9 @@ export const ProductForm = () => {
   //   };
 
   // console.log("filePath", filePath);
+
+  console.log("imgUpload", imgUpload);
+  console.log("imgUpload.path1", imgUpload.path1);
 
   const handleErrors = (error: ErrorType) => {
     setErrors(error);

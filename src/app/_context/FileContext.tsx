@@ -2,32 +2,67 @@
 
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
-interface FileContextType {
-  filePath: string | null;
-  fileName: string | null;
-  setFilePath: React.Dispatch<React.SetStateAction<string | null>>;
-  setFileName: React.Dispatch<React.SetStateAction<string | null>>;
+interface fileType {
+  file1: object;
+  file2?: object;
+  file3?: object;
 }
 
-const FileContext = createContext<FileContextType | undefined>(undefined);
+interface fileContextType {
+  file: fileType;
+  setFile: React.Dispatch<React.SetStateAction<fileType>>;
+}
+
+const fileContext = createContext<fileContextType | undefined>(undefined);
 
 export const FileProvider = ({ children }: { children: ReactNode }) => {
-  const [filePath, setFilePath] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [file, setFile] = useState<fileType>({
+    file1: {},
+    file2: {},
+    file3: {},
+  });
 
   return (
-    <FileContext.Provider
-      value={{ filePath, fileName, setFilePath, setFileName }}
-    >
+    <fileContext.Provider value={{ file, setFile }}>
       {children}
-    </FileContext.Provider>
+    </fileContext.Provider>
   );
 };
 
 export const useFile = () => {
-  const context = useContext(FileContext);
+  const context = useContext(fileContext);
   if (!context) {
     throw new Error("useFile must be used within a FileProvider");
   }
   return context;
 };
+
+// interface FileContextType {
+//   filePath: any | null;
+//   fileName: string | null;
+//   setFilePath: React.Dispatch<React.SetStateAction<any | null>>;
+//   setFileName: React.Dispatch<React.SetStateAction<string | null>>;
+// }
+
+// const FileContext = createContext<FileContextType | undefined>(undefined);
+
+// export const FileProvider = ({ children }: { children: ReactNode }) => {
+//   const [filePath, setFilePath] = useState<any | null>(null);
+//   const [fileName, setFileName] = useState<string | null>(null);
+
+//   return (
+//     <FileContext.Provider
+//       value={{ filePath, fileName, setFilePath, setFileName }}
+//     >
+//       {children}
+//     </FileContext.Provider>
+//   );
+// };
+
+// export const useFile = () => {
+//   const context = useContext(FileContext);
+//   if (!context) {
+//     throw new Error("useFile must be used within a FileProvider");
+//   }
+//   return context;
+// };

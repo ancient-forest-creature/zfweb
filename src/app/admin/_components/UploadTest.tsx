@@ -9,8 +9,8 @@ import { set } from "zod";
 import { ProductType } from "./__ProductForm";
 
 //const { imgUpload, setImgUpload } = useImageUpload();
-const { file, setFile } = useFile();
-const forUpload = [file.file1, file.file2, file.file3];
+const { files, setFiles } = useFile();
+const forUpload = [files.file1, files.file2, files.file3];
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
 

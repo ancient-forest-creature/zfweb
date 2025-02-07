@@ -29,6 +29,10 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     description: "",
     imgKey1: "",
     imgUrl1: "",
+    imgKey2: "",
+    imgUrl2: "",
+    imgKey3: "",
+    imgUrl3: "",
     inventory: 0,
   });
 

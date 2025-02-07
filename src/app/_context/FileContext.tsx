@@ -9,21 +9,21 @@ interface fileType {
 }
 
 interface fileContextType {
-  file: fileType;
-  setFile: React.Dispatch<React.SetStateAction<fileType>>;
+  files: fileType;
+  setFiles: React.Dispatch<React.SetStateAction<fileType>>;
 }
 
 const fileContext = createContext<fileContextType | undefined>(undefined);
 
 export const FileProvider = ({ children }: { children: ReactNode }) => {
-  const [file, setFile] = useState<fileType>({
+  const [files, setFiles] = useState<fileType>({
     file1: {},
     file2: {},
     file3: {},
   });
 
   return (
-    <fileContext.Provider value={{ file, setFile }}>
+    <fileContext.Provider value={{ files, setFiles }}>
       {children}
     </fileContext.Provider>
   );

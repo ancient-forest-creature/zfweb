@@ -40,7 +40,7 @@ export type ProductType = {
 export const ProductForm = () => {
   const { product, setProduct } = useProduct();
   const { imgUpload, setImgUpload } = useImageUpload();
-  const { file } = useFile();
+  const { files } = useFile();
   const [errors, setErrors] = useState<ErrorType>();
   const [clear, setClear] = useState(false);
   const $ut = useUploadThing("imageUploader");
@@ -82,13 +82,55 @@ export const ProductForm = () => {
   };
 
   const handleUploadTest = async () => {
-    console.log("handleUploadTest file", file);
-    const selectedFiles = [file.file1, file.file2, file.file3].filter(
+    console.log("handleUploadTest file", files);
+    const selectedFiles = [files.file1, files.file2, files.file3].filter(
       (f): f is File => !!f,
     );
     console.log("selectedFiles", selectedFiles);
     const result = await $ut.startUpload(selectedFiles);
     console.log("uploaded files UT", result);
+    console.log("result[0]", result[0]);
+    console.log("result[1]", result[1]);
+    console.log("result[2]", result[2]);
+    if (result) {
+      const updatedProduct = { ...product };
+
+      if (result[0]) {
+        updatedProduct.imgKey1 = result[0].key;
+        updatedProduct.imgUrl1 = result[0].url;
+      }
+      if (result[1]) {
+        updatedProduct.imgKey2 = result[1].key;
+        updatedProduct.imgUrl2 = result[1].url;
+      }
+      if (result[2]) {
+        updatedProduct.imgKey3 = result[2].key;
+        updatedProduct.imgUrl3 = result[2].url;
+      }
+
+      setProduct(updatedProduct);
+    }
+    // result && result[0]
+    //   ? setProduct({
+    //       ...product,
+    //       imgKey1: result[0].key,
+    //       imgUrl1: result[0].url,
+    //     })
+    //   : console.log("no result 0");
+    // result && result[1]
+    //   ? setProduct({
+    //       ...product,
+    //       imgKey1: result[1].key,
+    //       imgUrl1: result[1].url,
+    //     })
+    //   : console.log("no result 1");
+    // result && result[2]
+    //   ? setProduct({
+    //       ...product,
+    //       imgKey1: result[2].key,
+    //       imgUrl1: result[2].url,
+    //     })
+    //   : console.log("no result 2");
   };
 
   // const handleUploadTest = async () => {

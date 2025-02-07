@@ -5,7 +5,9 @@ import { addProduct } from "./db_connect";
 import { useProduct } from "~/app/_context/ProductContext";
 import { useImageUpload } from "~/app/_context/ImgUploadContext";
 import FileSelector from "./FileSelector";
+import { tryUT } from "./UploadTest";
 import { useFile } from "~/app/_context/FileContext";
+import { useUploadThing } from "~/utils/uploadthing";
 
 export type ErrorType = {
   message: string;
@@ -38,8 +40,10 @@ export type ProductType = {
 export const ProductForm = () => {
   const { product, setProduct } = useProduct();
   const { imgUpload, setImgUpload } = useImageUpload();
+  const { file } = useFile();
   const [errors, setErrors] = useState<ErrorType>();
   const [clear, setClear] = useState(false);
+  const $ut = useUploadThing("imageUploader");
   //const { filePath, fileName, setFilePath, setFileName } = useFile();
   //   const onImageUpload = (
   //     key: string,
@@ -77,12 +81,32 @@ export const ProductForm = () => {
     }
   };
 
+  const handleUploadTest = async () => {
+    console.log("handleUploadTest file", file);
+    const selectedFiles = [file.file1, file.file2, file.file3].filter(
+      (f): f is File => !!f,
+    );
+    console.log("selectedFiles", selectedFiles);
+    const result = await $ut.startUpload(selectedFiles);
+    console.log("uploaded files UT", result);
+  };
+
+  // const handleUploadTest = async () => {
+  //   const selectedFiles = Array.isArray(file)
+  //     ? file.filter((file): file is File => !!file)
+  //     : [];
+  //   await tryUT(selectedFiles);
+  // };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-center gap-4 p-4">
         <FileSelector num="1" />
         <FileSelector num="2" />
         <FileSelector num="3" />
+      </div>
+      <div>
+        <button onClick={handleUploadTest}>Upload Test</button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">

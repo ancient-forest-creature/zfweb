@@ -8,6 +8,9 @@ import { useFile } from "~/app/_context/FileContext";
 import { set } from "zod";
 import { ProductType } from "./__ProductForm";
 
+//const { imgUpload, setImgUpload } = useImageUpload();
+const { file, setFile } = useFile();
+const forUpload = [file.file1, file.file2, file.file3];
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
 
@@ -20,7 +23,7 @@ const useUploadThingInputProps = (...args: Input) => {
     const selectedFiles = Array.from(e.target.files);
     const result = await $ut.startUpload(selectedFiles);
 
-    console.log("uploaded files", result);
+    console.log("uploaded files UT", result);
     // TODO: persist result in state maybe?
   };
 
@@ -34,19 +37,45 @@ const useUploadThingInputProps = (...args: Input) => {
   };
 };
 
+export const tryUT = async (files: File[]) => {
+  const $ut = useUploadThing("imageUploader");
+
+  const result = await $ut.startUpload(files);
+
+  console.log("uploaded files UT", result);
+  return result;
+};
+
+// export const tryUT = async () => {
+//   const $ut = useUploadThing("imageUploader");
+
+//   //   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+//   //     if (!e.target.files) return;
+
+//   const selectedFiles = [file.file1, file.file2, file.file3].filter(
+//     (f): f is File => !!f,
+//   );
+//   const result = await $ut.startUpload(selectedFiles);
+
+//   console.log("uploaded files UT", result);
+//   // TODO: persist result in state maybe?
+//   return result;
+//   //   };
+// };
+
 export type ErrorType = {
   message: string;
 };
 
-export function UploadButton({
+export function TestButton({
   handleUploadErrorsAction,
 }: {
   handleUploadErrorsAction: (error: ErrorType) => void;
 }) {
   const router = useRouter();
-  const { imgUpload, setImgUpload } = useImageUpload();
-  const { imgPath, setImgPath } = useImgPath();
-  const { filePath, fileName, setFilePath, setFileName } = useFile();
+
+  //const { imgPath, setImgPath } = useImgPath();
+  //const { filePath, fileName, setFilePath, setFileName } = useFile();
   //const posthog = usePostHog();
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
@@ -74,7 +103,7 @@ export function UploadButton({
     onClientUploadComplete(result) {
       console.log("result UT", result);
       if (result && result[0]) {
-        setFilePath(result[0]);
+        console.log(result[0]);
       }
 
       //   toast.dismiss("upload-begin");

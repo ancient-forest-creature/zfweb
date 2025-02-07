@@ -10,6 +10,7 @@ const FileSelector = ({ num }: { num: string }) => {
   const [fileName, setFileName] = React.useState<string>("");
   const { imgUpload, setImgUpload } = useImageUpload();
   const { file, setFile } = useFile();
+  const fileNum = `file${num}`;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

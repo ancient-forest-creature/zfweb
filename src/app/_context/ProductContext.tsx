@@ -6,8 +6,8 @@ interface ProductType {
   title: string;
   price: number;
   description: string;
-  imgKey1: string;
-  imgUrl1: string;
+  imgKey1?: string;
+  imgUrl1?: string;
   inventory: number;
   imgKey2?: string;
   imgUrl2?: string;

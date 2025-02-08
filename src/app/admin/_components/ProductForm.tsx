@@ -5,9 +5,9 @@ import { addProduct } from "./db_connect";
 import { useProduct } from "~/app/_context/ProductContext";
 import { useImageUpload } from "~/app/_context/ImgUploadContext";
 import FileSelector from "./FileSelector";
-import { tryUT } from "./UploadTest";
 import { useFile } from "~/app/_context/FileContext";
 import { useUploadThing } from "~/utils/uploadthing";
+import { useRouter } from "next/navigation";
 
 export type ErrorType = {
   message: string;
@@ -44,41 +44,66 @@ export const ProductForm = () => {
   const [errors, setErrors] = useState<ErrorType>();
   const [clear, setClear] = useState(false);
   const $ut = useUploadThing("imageUploader");
-  //const { filePath, fileName, setFilePath, setFileName } = useFile();
-  //   const onImageUpload = (
-  //     key: string,
-  //     url: string,
-  //     mediaType?: string,
-  //     num?: string,
-  //   ) => {
-  //     console.log("mediaType oIU", mediaType);
-  //     console.log("num oIU", num);
-  //     const setKey = `${mediaType}Key${num}`;
-  //     const setUrl = `${mediaType}Url${num}`;
-  //     console.log("setKey", setKey);
-  //     console.log("setUrl", setUrl);
-  //     setProduct({ ...product, [setKey]: key, [setUrl]: url });
-  //     console.log("product", product);
-  //   };
+  const router = useRouter();
 
-  // console.log("filePath", filePath);
-
-  console.log("imgUpload", imgUpload);
-  console.log("imgUpload.path1", imgUpload.path1);
+  // console.log("imgUpload", imgUpload);
+  // console.log("imgUpload.path1", imgUpload.path1);
 
   const handleErrors = (error: ErrorType) => {
     setErrors(error);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const newProduct = await addProduct(product);
-      console.log("Product added:", newProduct);
-    } catch (err: any) {
-      console.error("Error adding product:", err);
-      handleErrors(err);
-    }
+  function timeout(delay: number) {
+    console.log("in timeout");
+    return new Promise((result) => setTimeout(result, delay));
+  }
+
+  const clearForm = () => {
+    setProduct({
+      title: "",
+      price: 0,
+      description: "",
+      imgKey1: "",
+      imgUrl1: "",
+      imgKey2: "",
+      imgUrl2: "",
+      imgKey3: "",
+      imgUrl3: "",
+      inventory: 0,
+    });
+    setImgUpload({ path1: "", path2: "", path3: "" });
+    setClear(true);
+    router.refresh();
+  };
+
+  const handleImageUpload = async () => {
+    console.log("handleUploadTest file", files);
+    const selectedFiles = [files.file1, files.file2, files.file3].filter(
+      (f): f is File => !!f,
+    );
+    console.log("selectedFiles", selectedFiles);
+    const result = await $ut.startUpload(selectedFiles);
+    console.log("uploaded files UT", result);
+    // if (result) {
+    //   console.log("in handleImageUpload");
+    //   const updatedProduct = { ...product };
+
+    //   if (result[0]) {
+    //     updatedProduct.imgKey1 = result[0].key;
+    //     updatedProduct.imgUrl1 = result[0].url;
+    //   }
+    //   if (result[1]) {
+    //     updatedProduct.imgKey2 = result[1].key;
+    //     updatedProduct.imgUrl2 = result[1].url;
+    //   }
+    //   if (result[2]) {
+    //     updatedProduct.imgKey3 = result[2].key;
+    //     updatedProduct.imgUrl3 = result[2].url;
+    //   }
+
+    //   setProduct(updatedProduct);
+    // }
+    return result;
   };
 
   const handleUploadTest = async () => {
@@ -89,9 +114,9 @@ export const ProductForm = () => {
     console.log("selectedFiles", selectedFiles);
     const result = await $ut.startUpload(selectedFiles);
     console.log("uploaded files UT", result);
-    console.log("result[0]", result[0]);
-    console.log("result[1]", result[1]);
-    console.log("result[2]", result[2]);
+    // console.log("result[0]", result[0]);
+    // console.log("result[1]", result[1]);
+    // console.log("result[2]", result[2]);
     if (result) {
       const updatedProduct = { ...product };
 
@@ -110,35 +135,36 @@ export const ProductForm = () => {
 
       setProduct(updatedProduct);
     }
-    // result && result[0]
-    //   ? setProduct({
-    //       ...product,
-    //       imgKey1: result[0].key,
-    //       imgUrl1: result[0].url,
-    //     })
-    //   : console.log("no result 0");
-    // result && result[1]
-    //   ? setProduct({
-    //       ...product,
-    //       imgKey1: result[1].key,
-    //       imgUrl1: result[1].url,
-    //     })
-    //   : console.log("no result 1");
-    // result && result[2]
-    //   ? setProduct({
-    //       ...product,
-    //       imgKey1: result[2].key,
-    //       imgUrl1: result[2].url,
-    //     })
-    //   : console.log("no result 2");
   };
 
-  // const handleUploadTest = async () => {
-  //   const selectedFiles = Array.isArray(file)
-  //     ? file.filter((file): file is File => !!file)
-  //     : [];
-  //   await tryUT(selectedFiles);
-  // };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await handleImageUpload(); // the problem here appears to be the set issue. Just pass res with everything else to add product and set there.
+      const urls = res
+        ? [res[0]?.url, res[1]?.url, res[2]?.url].filter(
+            (url): url is string => url !== undefined && url.length > 0,
+          )
+        : [];
+      const keys = res
+        ? [res[0]?.key, res[1]?.key, res[2]?.key].filter(
+            (key): key is string => key !== undefined && key.length > 0,
+          )
+        : [];
+      console.log("urls", urls); // while (res != "go") {
+      //   console.log("In while loop");
+      //   await timeout(100);
+      // }
+      console.log("res", res);
+      console.log("product", product);
+      const newProduct = await addProduct(product, urls, keys);
+      console.log("Product added:", newProduct);
+    } catch (err: any) {
+      console.error("Error adding product:", err);
+      handleErrors(err);
+    }
+    clearForm();
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -282,7 +308,10 @@ export const ProductForm = () => {
               type="number"
               value={product.inventory}
               onChange={(e) =>
-                setProduct({ ...product, inventory: Number(e.target.value) })
+                setProduct({
+                  ...product,
+                  inventory: Number(e.target.value),
+                })
               }
             />
             <br />
@@ -296,4 +325,3 @@ export const ProductForm = () => {
     </div>
   );
 };
-// export default ProductForm;

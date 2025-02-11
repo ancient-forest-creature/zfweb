@@ -32,7 +32,7 @@ export type ProductType = {
 export const ProductForm = () => {
   const { product, setProduct } = useProduct();
   const { imgUpload, setImgUpload } = useImageUpload();
-  const { files } = useFile();
+  const { files, setFiles } = useFile();
   const [errors, setErrors] = useState<ErrorType>();
   const [clear, setClear] = useState(false);
   const $ut = useUploadThing("imageUploader");
@@ -53,6 +53,7 @@ export const ProductForm = () => {
       inventory: 0,
     });
     setImgUpload({ path1: "", path2: "", path3: "" });
+    setFiles({ file1: undefined, file2: undefined, file3: undefined });
     setClear(true);
     router.refresh();
   };

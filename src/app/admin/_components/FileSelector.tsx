@@ -34,12 +34,22 @@ const FileSelector = ({ num }: { num: string }) => {
       />
       <label htmlFor={`file-selector-${num}`} className="cursor-pointer">
         <div>
+          {files[fileNum] ? (
+            <ShowImg
+              imgUrl={URL.createObjectURL(files[fileNum])}
+              altTxt={fileName}
+            />
+          ) : (
+            <ImgBox mediaType="Image" num={num} />
+          )}
+        </div>{" "}
+        {/* <div>
           {filePath ? (
             <ShowImg imgUrl={filePath} altTxt={fileName} />
           ) : (
             <ImgBox mediaType="Image" num={num} />
           )}
-        </div>
+        </div> */}
       </label>
     </div>
   );

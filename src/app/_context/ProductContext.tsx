@@ -6,13 +6,7 @@ interface ProductType {
   title: string;
   price: number;
   description: string;
-  imgKey1?: string;
-  imgUrl1?: string;
   inventory: number;
-  imgKey2?: string;
-  imgUrl2?: string;
-  imgKey3?: string;
-  imgUrl3?: string;
 }
 
 interface ProductContextType {
@@ -27,12 +21,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     title: "",
     price: 0,
     description: "",
-    imgKey1: "",
-    imgUrl1: "",
-    imgKey2: "",
-    imgUrl2: "",
-    imgKey3: "",
-    imgUrl3: "",
     inventory: 0,
   });
 

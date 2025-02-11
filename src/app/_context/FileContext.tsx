@@ -1,5 +1,7 @@
 "use client";
 
+// global context for holding the local images for a product before upload/product creation. Currently, the product form only allows for 3 images to be uploaded. This context is used to hold the images before they are uploaded to the cloud storage and the urls are stored in the database.
+
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
 interface fileType {

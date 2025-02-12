@@ -12,13 +12,13 @@ const Products = async () => {
     <div className="flex flex-wrap items-center justify-center gap-4">
       {products.map((product) => (
         <div key={product.id}>
-          <div className="relative max-w-sm">
+          <div className="relative max-w-xs">
             <a href="#">
               <img src={product.imgUrl[0]} alt={`Image ${product.id}`} />
             </a>
             <div className="flex flex-col items-center p-5">
               <a href="#">
-                <h1 className="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {product.title}
                 </h1>
               </a>

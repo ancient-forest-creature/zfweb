@@ -2,13 +2,11 @@
 
 import React from "react";
 import { ImgBox, ShowImg } from "./ImgOptions";
-//import { useImageUpload } from "~/app/_context/ImgUploadContext";
 import { useFile } from "~/app/_context/FileContext"; // Holds the entire file object to allow upload by product
 
 const FileSelector = ({ num }: { num: string }) => {
   const [filePath, setFilePath] = React.useState<string>("");
   const [fileName, setFileName] = React.useState<string>("");
-  //const { imgUpload, setImgUpload } = useImageUpload();
   const { files, setFiles } = useFile();
   const fileNum = `file${num}`;
 
@@ -42,14 +40,7 @@ const FileSelector = ({ num }: { num: string }) => {
           ) : (
             <ImgBox mediaType="Image" num={num} />
           )}
-        </div>{" "}
-        {/* <div>
-          {filePath ? (
-            <ShowImg imgUrl={filePath} altTxt={fileName} />
-          ) : (
-            <ImgBox mediaType="Image" num={num} />
-          )}
-        </div> */}
+        </div>
       </label>
     </div>
   );

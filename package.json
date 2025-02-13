@@ -23,6 +23,7 @@
     "@clerk/nextjs": "^6.11.2",
     "@neondatabase/serverless": "^0.10.4",
     "@t3-oss/env-nextjs": "^0.12.0",
+    "@tailwindcss/postcss": "^4.0.6",
     "@uploadthing/react": "^7.2.0",
     "@uploadthing/shared": "^7.1.6",
     "@vercel/postgres": "^0.10.0",

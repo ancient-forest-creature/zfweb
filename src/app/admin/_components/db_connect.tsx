@@ -10,20 +10,6 @@ export const addProduct = async (
   urls: string[] | undefined,
   keys: string[] | undefined,
 ) => {
-  // const urls = [
-  //   product.imgUrl1,
-  //   product.imgUrl2,
-  //   product.imgUrl3,
-  //   product.videoUrl,
-  // ].filter((url): url is string => url !== undefined && url.length > 0);
-
-  // const keys = [
-  //   product.imgKey1,
-  //   product.imgKey2,
-  //   product.imgKey3,
-  //   product.videoKey,
-  // ].filter((key): key is string => key !== undefined && key.length > 0);
-
   const result: { returnId: number }[] = await db
     .insert(dbProduct)
     .values({

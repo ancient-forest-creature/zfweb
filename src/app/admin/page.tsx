@@ -4,6 +4,7 @@ import { ProductProvider } from "../_context/ProductContext";
 import { ImgUploadProvider } from "../_context/ImgUploadContext";
 import { ProductForm } from "./_components/ProductForm";
 import { FileProvider } from "../_context/FileContext";
+import { ProductInventory } from "./_components/ProductInventory";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
               <h1 className="text-4xl font-bold">Admin Page</h1>
               <ImgUploadProvider>
                 <ProductForm />
+                <ProductInventory />
               </ImgUploadProvider>
             </div>
           </ProductProvider>

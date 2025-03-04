@@ -1,5 +1,6 @@
 import { db } from "~/server/db";
 import { getProducts } from "~/server/queries";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,13 @@ export const ProductInventory = async () => {
         <div key={product.id}>
           <div className="relative max-w-sm">
             <a href="#">
-              <img src={product.imgUrl[0]} alt={`Image ${product.id}`} />
+              <Image
+                src={product.imgUrl[0]!}
+                style={{ objectFit: "contain" }}
+                width={192}
+                height={192}
+                alt={`Image ${product.id}`}
+              />
             </a>
             <div className="flex flex-col items-center p-5">
               <a href="#">

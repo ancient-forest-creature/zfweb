@@ -1,6 +1,7 @@
 // import Link from "next/link";
 // import { db } from "~/server/db";
 import { getProducts } from "~/server/queries";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -13,16 +14,22 @@ const Products = async () => {
   const products = await getProducts();
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-4">
+    <div className="flex flex-wrap items-start justify-center gap-4">
       {products.map((product) => (
         <div key={product.id}>
           <div className="relative max-w-sm">
             <a href="#">
-              <img src={product.imgUrl[0]} alt={`Image ${product.id}`} />
+              <Image
+                src={product.imgUrl[0]!}
+                style={{ objectFit: "contain" }}
+                width={250}
+                height={250}
+                alt={`Image ${product.id}`}
+              />
             </a>
             <div className="flex flex-col items-center p-5">
               <a href="#">
-                <h1 className="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {product.title}
                 </h1>
               </a>
@@ -45,7 +52,7 @@ const Products = async () => {
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4">
+    <main className="flex min-h-screen flex-col items-center justify-start gap-4">
       <Products />
     </main>
   );

@@ -1,12 +1,16 @@
-import Link from "next/link";
-import { db } from "~/server/db";
+// import Link from "next/link";
+// import { db } from "~/server/db";
+import { getProducts } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
+// const Products = async () => {
+//   const products = await db.query.product.findMany({
+//     orderBy: (model: any, { asc }) => asc(model.id),
+//   });
+
 const Products = async () => {
-  const products = await db.query.product.findMany({
-    orderBy: (model: any, { asc }) => asc(model.id),
-  });
+  const products = await getProducts();
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-4">

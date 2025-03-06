@@ -1,4 +1,4 @@
-import { db } from "~/server/db";
+import Link from "next/link";
 import { getProducts } from "~/server/queries";
 import Image from "next/image";
 
@@ -17,7 +17,7 @@ export const ProductInventory = async () => {
       {products.map((product) => (
         <div key={product.id}>
           <div className="relative max-w-sm">
-            <a href="#">
+            <Link href={`/admin/product/${product.id}`}>
               <Image
                 src={product.imgUrl[0]!}
                 style={{ objectFit: "contain" }}
@@ -25,7 +25,7 @@ export const ProductInventory = async () => {
                 height={192}
                 alt={`Image ${product.id}`}
               />
-            </a>
+            </Link>
             <div className="flex flex-col items-center p-5">
               <a href="#">
                 <h1 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">

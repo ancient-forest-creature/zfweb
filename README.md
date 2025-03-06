@@ -9,10 +9,10 @@
 - [x] Attach db to UI
 - [x] Add authentication (/w clerk)
 - [x] Add image upload
-- [] "taint" (server-only)
-- [] Use Next/Image component
-- [] Error management (w/ Sentry)
+- [x] "taint" (server-only)
+- [x] Use Next/Image component
 - [] Routing/image page (parallel route)
+- [] Error management (w/ Sentry)
 - [] Upload button SVG
 - [] shadcn/ui toast
 - [] Analytics (posthog)

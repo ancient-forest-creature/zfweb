@@ -23,3 +23,18 @@ export default function RootLayout({
     </html>
   );
 }
+
+// export default function RootLayout({
+//   children,
+//   modal,
+// }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
+//   return (
+//     <html lang="en">
+//       <body className={`${GeistSans.variable} dark flex flex-col gap-4`}>
+//         {children}
+//         {modal}
+//         <div id="modal-root" />
+//       </body>
+//     </html>
+//   );
+// }

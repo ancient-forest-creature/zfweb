@@ -1,4 +1,4 @@
-import FullPageProductView from "~/app/admin/_components/ProductEdit";
+import FullPageProductEdit from "~/app/admin/_components/ProductEdit";
 import { Modal } from "./modal";
 
 export default function PhotoModal({
@@ -11,7 +11,7 @@ export default function PhotoModal({
   // if (isNaN(idAsNumber)) throw new Error("Invalid Photo ID");
   return (
     <Modal>
-      <FullPageProductView id={Number(productId)} />{" "}
+      <FullPageProductEdit id={Number(productId)} />{" "}
       {/* moved all error handing to the component and cast the photoId in the props handoff */}
     </Modal>
   );

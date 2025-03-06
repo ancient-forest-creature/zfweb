@@ -11,7 +11,7 @@
 - [x] Add image upload
 - [x] "taint" (server-only)
 - [x] Use Next/Image component
-- [] Routing/image page (parallel route)
+- [x] Routing/image page (parallel route)
 - [] Error management (w/ Sentry)
 - [] Upload button SVG
 - [] shadcn/ui toast

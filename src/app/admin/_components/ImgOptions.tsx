@@ -27,3 +27,9 @@ export const ShowImg = ({
     </div>
   );
 };
+
+export const smImg = () => {
+  return (
+    <div className="box-border flex h-32 w-32 items-center justify-center border-4 border-white bg-gray-500 p-4"></div>
+  );
+};

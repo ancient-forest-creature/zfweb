@@ -2,7 +2,7 @@ import { deleteProduct, getProductById } from "~/server/queries";
 import { clerkClient } from "@clerk/nextjs/server";
 import { Button } from "~/components/ui/button";
 
-export default async function FullPageProductView(props: { id: number }) {
+export default async function FullPageProductEdit(props: { id: number }) {
   const idAsNumber = Number(props.id);
   if (isNaN(props.id)) throw new Error("Invalid Photo ID");
   const product = await getProductById(props.id);

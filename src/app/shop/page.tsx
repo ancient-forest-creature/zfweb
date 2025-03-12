@@ -29,11 +29,11 @@ const Products = async () => {
             </a>
             <div className="flex flex-col items-center p-5">
               <a href="#">
-                <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">
                   {product.title}
                 </h1>
               </a>
-              <p className="mb-3 text-xl font-normal text-gray-700 dark:text-gray-400">
+              <p className="mb-3 text-xl font-normal text-gray-400">
                 ${product.price}
               </p>
               <a

@@ -27,12 +27,12 @@ export const ProductInventory = async () => {
               />
             </Link>
             <div className="flex flex-col items-center p-5">
-              <a href="#">
-                <h1 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <Link href={`/admin/product/${product.id}`}>
+                <h1 className="mb-2 text-xl font-bold tracking-tight text-white">
                   {product.title}
                 </h1>
-              </a>
-              <p className="mb-3 text-xl font-normal text-gray-700 dark:text-gray-400">
+              </Link>
+              <p className="mb-3 text-xl font-normal text-gray-400">
                 ${product.price}
               </p>
             </div>

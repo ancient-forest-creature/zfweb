@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import { addProduct } from "./db_connect";
-import { useFile } from "~/app/_context/FileContext";
 import { useProduct } from "~/app/_context/ProductContext";
 import { useImageUpload } from "~/app/_context/ImgUploadContext";
 import FileSelector from "./FileSelector";
+import { useFile } from "~/app/_context/FileContext";
 import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
 
 export type ErrorType = {
   message: string;
@@ -30,15 +29,10 @@ export type ProductType = {
   category_id?: string;
 };
 
-// Dynamically import the DnD components with SSR disabled
-const DndContextWrapper = dynamic(() => import("./DndContextWrapper"), {
-  ssr: false,
-});
-
 export const ProductForm = () => {
-  const { files, setFiles } = useFile();
   const { product, setProduct } = useProduct();
   const { imgUpload, setImgUpload } = useImageUpload();
+  const { files, setFiles } = useFile();
   const [errors, setErrors] = useState<ErrorType>();
   const [clear, setClear] = useState(false);
   const $ut = useUploadThing("imageUploader");
@@ -179,3 +173,60 @@ export const ProductForm = () => {
     </div>
   );
 };
+
+import { deleteProduct, getProductById } from "~/server/queries";
+import { clerkClient } from "@clerk/nextjs/server";
+import { Button } from "~/components/ui/button";
+
+export default async function FullPageProductEdit(props: { id: number }) {
+  const idAsNumber = Number(props.id);
+  if (isNaN(props.id)) throw new Error("Invalid Photo ID");
+  const product = await getProductById(props.id);
+
+  return (
+    <div className="flex h-full w-full min-w-0">
+      <div className="flex h-auto w-auto flex-shrink items-center justify-center">
+        <img
+          src={product.imgUrl[0]}
+          alt={`Product ${product.id}`}
+          className="max-h-full max-w-full object-contain"
+        />
+      </div>
+
+      <div className="flex w-48 flex-shrink-0 flex-col border-x border-white">
+        <div className="border-b border-white p-2 text-center text-lg">
+          {product.title}
+        </div>
+
+        <div className="flex flex-col p-2">
+          <span>Description:</span>
+          <span>{product.description}</span>
+        </div>
+        <div className="flex flex-col p-2">
+          <span>Price:</span>
+          <span>{product.price}</span>
+        </div>
+        <div className="flex flex-col p-2">
+          <span>Inventory:</span>
+          <span>{product.inventory}</span>
+        </div>
+        <div className="flex flex-col p-2">
+          <span>Created On:</span>
+          <span>{new Date(product.createdAt).toLocaleDateString()}</span>
+        </div>
+        <div className="p-2">
+          <form
+            action={async () => {
+              "use server";
+              await deleteProduct(idAsNumber);
+            }}
+          >
+            <Button type="submit" variant="destructive">
+              Delete
+            </Button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}

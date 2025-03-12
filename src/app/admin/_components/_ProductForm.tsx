@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import { addProduct } from "./db_connect";
-import { useFile } from "~/app/_context/FileContext";
 import { useProduct } from "~/app/_context/ProductContext";
 import { useImageUpload } from "~/app/_context/ImgUploadContext";
 import FileSelector from "./FileSelector";
+import { useFile } from "~/app/_context/FileContext";
 import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
 
 export type ErrorType = {
   message: string;
@@ -30,15 +29,10 @@ export type ProductType = {
   category_id?: string;
 };
 
-// Dynamically import the DnD components with SSR disabled
-const DndContextWrapper = dynamic(() => import("./DndContextWrapper"), {
-  ssr: false,
-});
-
 export const ProductForm = () => {
-  const { files, setFiles } = useFile();
   const { product, setProduct } = useProduct();
   const { imgUpload, setImgUpload } = useImageUpload();
+  const { files, setFiles } = useFile();
   const [errors, setErrors] = useState<ErrorType>();
   const [clear, setClear] = useState(false);
   const $ut = useUploadThing("imageUploader");

@@ -30,6 +30,8 @@ export const ShowImg = ({
 
 export const smImg = () => {
   return (
-    <div className="box-border flex h-32 w-32 items-center justify-center border-4 border-white bg-gray-500 p-4"></div>
+    <div className="box-border flex h-16 w-16 items-center justify-center border-4 border-white bg-gray-400 p-4 hover:bg-gray-500">
+      <h1 className="text-2xl font-bold tracking-tight text-white">+</h1>
+    </div>
   );
 };
